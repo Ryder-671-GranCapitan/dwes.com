@@ -72,7 +72,7 @@ define("NL", "<br>");
     echo "\$numero4 es $numero4 y su tipo es: " . gettype($numero4) . NL;
 
     // No lo hace con float, solo lo hace con cadenas (Strings)
-    $numero5 = PI;
+    $numero5 = .31;
     $numero6 = +$numero5;
     echo "\$numero6 es $numero6 y su tipo es: " . gettype($numero6) . NL;
     ?>
@@ -224,7 +224,7 @@ define("NL", "<br>");
     $n1 = 9;
     $n2 = 5;
     $n3 = 10;
-    $resultado = $n1 == 9 || $n2 < $n1 and $n3 > 10;
+    $resultado ($n1 == 9 OR $n2 < $n1 ) and $n3 > 10;
     echo "el restulado es: " . (int)$resultado . "<br>";
 
     $resultado = $n1 + 5 / $n3 < $n1 ** 3 and $n3 / 5 >= $n1 * $n2 / $n3 or $n1 - 3 % $n3 - 7;
