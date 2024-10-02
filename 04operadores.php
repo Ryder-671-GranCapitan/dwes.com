@@ -72,7 +72,7 @@ define("NL", "<br>");
     echo "\$numero4 es $numero4 y su tipo es: " . gettype($numero4) . NL;
 
     // No lo hace con float, solo lo hace con cadenas (Strings)
-    $numero5 = PI;
+    $numero5 = .31;
     $numero6 = +$numero5;
     echo "\$numero6 es $numero6 y su tipo es: " . gettype($numero6) . NL;
     ?>
