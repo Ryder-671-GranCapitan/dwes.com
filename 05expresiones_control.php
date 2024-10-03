@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -241,14 +242,14 @@
     for ($i = 10, $j = 0; $i >= 5 and $j < 8; $i--, $j += 2) {
         echo "$i ---- $j <br>";
     }
-?>
+    ?>
 
 
-<h3>bucle while</h3>
-<?php
+    <h3>bucle while</h3>
+    <?php
 
     //sumar los numeros pares que se generan aleatoriamente hasta el 0
-    $numero = rand(0,10);
+    $numero = rand(0, 10);
     $total = 0 + $numero;
 
     while ($numero != 0) {
@@ -256,47 +257,163 @@
         if ($numero % 2 == 0) {
             $total += $numero;
         }
-        $numero = rand(0,10);
-
+        $numero = rand(0, 10);
     }
     echo "el total es $total";
 
-?>
+    ?>
 
     <h3>do while</h3>
 
-<?php
+    <?php
     //contar cuantos numeros impares se generan aleatoriamente hasta que se genera uno geativo
 
 
     $total = 0;
 
     do {
-        $numero = rand(-5,50);
+        $numero = rand(-5, 50);
         echo "el numero generado es: $numero <br>";
-        if (abs($numero) % 2 == 1) 
+        if (abs($numero) % 2 == 1)
             $total++;
-
-
     } while ($numero >= 0);
     echo "se han generado $total numeros"
 
-?>
+    ?>
     <h3>sentencia break y continue</h3>
-<?php
+    <?php
     // bucle repetir hasta romper con break
 
     do {
-        $numero = rand(0,20);
+        $numero = rand(0, 20);
         if ($numero % 3 == 0) $total++;
 
         echo "el numero es $numero <br>";
-        if ($numero == 0 ) break;
-
-
+        if ($numero == 0) break;
     } while (true);
-?>
 
+
+    // generar numeros alatorios entre 1 y 10 y sumar lospares
+    //hasta que la sima sea superior a 100 o se hayan generado
+    //como maximo 20 numeros
+
+    $suma_pares = 0;
+    $contador = 0;
+    while (true) {
+        $numero = rand(1, 10);
+        if ($numero % 2 == 0)
+            $suma_pares += $numero;
+
+        if ($suma_pares > 100) break;
+
+        $contador++;
+        if ($contador == 20) break;
+    }
+
+    echo "se han generado $contador numeros y la suma de los pares es $suma_pares <br>";
+
+
+    //break con argumento numerico
+    // break adminte un argumento numerico para indicar 
+    // de que bucle salirse. solo funciona en bucles anidados
+
+    //generar 200 numeros aleatorios entre 1 y 1000
+    //por cada numero se comprueba cuantos numeros primos hay desde 1 hasta ese numero
+    // si mas de  10 numeros primos que termine la ejecucion
+    //al final visualizar cada numero generado y los primos hasta ese numero
+
+    for ($i = 0; $i < 200; $i++) {
+        $numero = rand(1, 100);
+        echo "El numero generado es: $numero <br>";
+        $cuantos_primos = 0;
+
+        for ($j = 1; $j < $numero; $j++) {
+            // Averiguar si $j es primo
+            $es_primo = true;
+            $raiz_cuadrada = $j ** 0.5;
+            $k = 2;
+            while ($es_primo && $k <= $raiz_cuadrada) {
+                if ($j % $k == 0) $es_primo = false;
+                $k++;
+            }
+            // Como podemos saber si el numero $j es primo
+            if ($es_primo) {
+                echo "$j ";
+                $cuantos_primos++;
+
+                if ($cuantos_primos > 10) break 1;
+            }
+        }
+    }
+
+    //genera 10 numeros aleatorios
+    //por cada uno genera tanto caracteres en minuscula alatorios como ese numero
+    // si alguno de los caracteres generados de la A a la Z
+    //si alguno es Z acaba la ejecucion
+    // si el numero generado es impar que genere otro
+    echo "<br><br><br><br>";
+    for ($i = 0; $i < 10; $i++) {
+        $numero = rand(1, 10);
+        if ($numero % 2 == 1) continue;
+        echo $numero;
+        for ($j = 1; $j <= $numero; $j++) {
+            //genero un caracter alatorios
+            $codigo_ascii_letra = rand(97, 122);
+            $caracter = chr($codigo_ascii_letra);
+            echo $caracter;
+
+            if ($caracter == "z") break 2;
+        }
+        echo "<br>";
+    }
+
+
+    for ($i = 0; $i < 200; $i++) {
+        $numero = rand(1, 100);
+        echo "El numero generado es: $numero <br>";
+        $cuantos_primos = 0;
+
+        for ($j = 1; $j < $numero; $j++) {
+            // Averiguar si $j es primo
+            $es_primo = true;
+            $raiz_cuadrada = $j ** 0.5;
+            $k = 2;
+            while ($es_primo && $k <= $raiz_cuadrada) {
+                if ($j % $k == 0) $es_primo = false;
+                $k++;
+            }
+            // Como podemos saber si el numero $j es primo
+            if ($es_primo) {
+                echo "$j ";
+                $cuantos_primos++;
+
+                if ($cuantos_primos > 10) break 1;
+            }
+        }
+    }
+
+    ?>
+    <h3>sintaxis alternatica a las estructuras de control</h3>
+
+    <?php
+
+    $numero = rand(1,100);
+    if ($numero % 2 ==0) {
+        echo "el numero $numero es par <br>";
+    }
+    else {
+        echo "el numero $numero es impar <br>";
+    }
+    
+    for ($i=1; $i <= 10; $i++) { 
+        echo "$i x $numero = ", $i * $numero . "<br>";
+        $i--;
+    }
+    while ($i > 0) {
+        echo "el valor de i es $i";
+    }
+
+    ?>
 
 </body>
 
