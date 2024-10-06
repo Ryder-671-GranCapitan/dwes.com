@@ -156,13 +156,171 @@
     <?php
     $n = 3.5;
 
-
     $ecuacion = ($n * ($n + 1)) / 2;
 
     echo $ecuacion;
     ?>
 
+    <h3>11</h3>
 
+    <p>
+        Crea un script PHP que asigna a una variable tu peso en Kg y luego calcule el peso equivalente en onzas. Una onza son 28,3495 gramos.
+    </p>
+
+    <?php
+    $peso = 61.5;
+
+    // Convertir el peso a onzas
+    $peso_onzas = ($peso * 1000) / 28.3495;
+
+    // Mostrar el resultado
+    echo "Tu peso en onzas es: " . number_format($peso_onzas, 2) . " onzas.";
+    ?>
+
+    <h3>12</h3>
+    <p>
+        Crea un script PHP que calcule y muestre cuántos bytes hay en un SSD de 64GB.
+    </p>
+    </p>
+
+    <?php
+    $ssd = 64;
+
+    $bytes = (1024 ** 3) * 64;
+
+    echo "tu capacidad en bytes es : $bytes";
+    ?>
+
+    <h3>13</h3>
+    <p>
+        Crea un script PHP que asigna a una variable un NIF sin la letra. Después calcula y muestra la letra correspondiente a él.
+    </p>
+
+
+    <?php
+    $dni = 25619445;
+
+    $letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+    $indice = $dni % 23;
+
+    // Obtener la letra correspondiente
+    $letra = $letras[$indice];
+
+    echo "El NIF completo es: " . $dni . $letra;
+    ?>
+
+    <h3>14</h3>
+    <p>
+        14.
+        Crea un script PHP que calcule y muestre la cantidad de KB y bytes que hay en 5 MB.
+    </p>
+
+    <?php
+    $mb = 5;
+
+    $kb = $mb * 1024;
+    $bytes = $kb * 1024;
+
+    // Mostrar los resultados
+    echo "En $mb MB hay $kb KB y $bytes bytes.";
+    ?>
+
+    <h3>15</h3>
+    <p>
+        Crea un script PHP que asigna a variables el peso (en Kg) y la altura (en metros). Luego, calcule el índice de masa corporal. Finalmente, muestre en pantalla el enunciado Tu índice de masa corporal es < imc>, donde < imc> es el índice de masa corporal calculado con dos dígitos decimales.
+    </p>
+    <?php
+    $peso = 61.5;
+    $altura = 1.60;
+
+    // Convertir el peso a onzas
+    $imc = $peso / ($altura * $altura);
+
+    // Mostrar el resultado
+    echo "Tu índice de masa corporal es " . number_format($peso_onzas, 2);
+    ?>
+
+
+    <h3>16</h3>
+    <p>
+        Crea un script PHP que asigna a variables dos números enteros y muestre en pantalla <n> dividido por <m> dé como resultado un cociente de <c> y el resto es <r>, donde <n> y <m> son los números introducidos, <c> es el cociente y <r> es el resto respectivamente.
+    </p>
+
+    <?php
+    // Asignar dos números enteros a las variables
+    $n = 10; // Cambia este valor por el primer número
+    $m = 3;  // Cambia este valor por el segundo número
+
+    // Calcular el cociente y el resto
+    $cociente = intdiv($n, $m); // División entera
+    $resto = $n % $m;           // Calcular el resto
+
+    // Mostrar el resultado en el formato deseado
+    echo "$n dividido por $m da como resultado un cociente de $cociente y el resto es $resto.";
+    ?>
+
+    <h3>17</h3>
+    <p></p>
+
+    <p>
+        Crea un script PHP que asigna a una variable una temperatura en ºC y muestre en pantalla su equivalente en ºK y ºF.
+    </p>
+
+    <?php
+    $celsius = 35;
+
+    $kelvin = $celsius + 273.15;
+    $fahrenheit = ($celsius * 9 / 5) + 32;
+
+    // Mostrar los resultados
+    echo "$celsius ºC es: $kelvin ºK y $fahrenheit ºf ";
+    ?>
+
+    <h3>18</h3>
+    <p>
+        Crea un script PHP que asina a variables el número de muñecos y el número de coches de juguete que hay en un paquete enviado por una agencia de transporte. Si un muñeco pesa 4 onzas y un coche de juguete pesa 2 libras, ¿cuánto pesa el paquete en Kg?
+    </p>
+
+    <?php
+    // Asignar el número de muñecos y coches de juguete
+    $munecos = 5; // Cambia este valor por el número de muñecos
+    $coches = 3;  // Cambia este valor por el número de coches de juguete
+
+    // Peso de un muñeco en onzas y coche de juguete en libras
+    $peso_muneco_onzas = 4 * $munecos;  // Peso de un muñeco en onzas
+    $peso_coche_libras = 2 * $coches;  // Peso de un coche de juguete en libras
+
+    // Convertir el peso a kilogramos
+    $peso_muneco_kg = $peso_muneco_onzas * 0.0283495;  // Convertir onzas a Kg
+    $peso_coche_kg = $peso_coche_libras * 0.453592;    // Convertir libras a Kg
+
+    // Calcular el peso total del paquete en Kg
+    $peso_total = ($munecos * $peso_muneco_kg) + ($coches * $peso_coche_kg);
+
+    // Mostrar el resultado
+    echo "El peso total del paquete es: " . number_format($peso_total, 2) . " kg.";
+    ?>
+
+    <h3>19</h3>
+    <p>
+        Crea un script PHP que asigna a una variable una cantidad de dinero en € y muestre en pantalla su equivalente en $ y £.
+    </p>
+
+    <?php
+    $euros = 35;
+
+    $dolares = $euros * 0.84;
+    $libras = $euros * 1.10;
+
+    // Mostrar los resultados
+    echo "$euros €: $dolares $ y $libras li £";
+    ?>
+
+
+
+
+    <br><br><br><br><br>
 </body>
 
 </html>
