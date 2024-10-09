@@ -6,7 +6,7 @@ para incluir archiivos haay 4 funciones que funcionan casi igual:
 
 -require(): incluye el contenido del argumento donde se invoque. si el archivo no existe se emite un error fatal y acaba la ejecucion
 
--que ocurre si incluyo el mismo archivo mas de una vez?
+-que ocurre si incluyo el mismo archivo mas de una vez?: da un error por duplicidad
 
 */
 include("include/funciones.php");
