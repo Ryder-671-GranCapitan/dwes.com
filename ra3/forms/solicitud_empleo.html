@@ -1,29 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Formulario de solicitud de empleo</title>
-        <link type="text/css" rel="stylesheet" href="/style/general.css">
-        <link type="text/css" rel="stylesheet" href="/style/formularios.css">
-    </head>
-    <body>
-        <header>Solicitud de empleo</header>
-        <form method="POST" action="/ra3/forms/solicitud_empleo.php">
-            <!-- Información personal -->
-             <fieldset>
-                <legend>Datos personales</legend>
-                <label for="nombre">Nombre completo</label>
-                <input type="text" name="nombre" id="nombre" size="50" required
-                    placeholder="Introduce aquí tu nombre completo">
 
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" size="40" required>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Formulario de solicitud de empleo</title>
+    <link type="text/css" rel="stylesheet" href="/style/general.css">
+    <link type="text/css" rel="stylesheet" href="/style/formularios.css">
+</head>
 
-                <label for="clave">Clave</label>
-                <input type="password" name="clave" id="clave" size="10" required>
+<body>
+    <header>Solicitud de empleo</header>
+    <form method="POST" action="/ra3/forms/solicitud_empleo.php">
+        <!-- Información personal -->
+        <fieldset>
+            <legend>Datos personales</legend>
+            <label for="nombre">Nombre completo</label>
+            <input type="text" name="nombre" id="nombre" size="50" required
+                placeholder="Introduce aquí tu nombre completo">
 
-             </fieldset>
-        </form>
-    </body>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" size="40" required>
+
+            <label for="clave">Clave</label>
+            <input type="password" name="clave" id="clave" size="10" required>
+            
+            <label for="linkedin">perfin de linkedin</label>
+            <input type="url" name="linkedin" id="linkedin" size="50">
+        </fieldset>
+
+        <fieldset>
+            <legend>detalles del trabajo</legend>
+
+            <label for="fecha_disponible">fecha disponible</label>
+            <input type="date" name="fecha_disponible" id="fecha_disponible">
+
+            <label for="hora_entrevista">hora entrevista</label>
+            <input type="time" name="hora_entrevista" id="hora_entrevista">
+
+            <label for="salario">salario</label>
+            <input type="number" name="salario" id="salario">
+
+        </fieldset>
+
+
+        <fieldset>
+            <legend>prefenrencias del puesto</legend>
+
+            <label>Areas de preferencia<br></label>
+            <div>
+                <input type="checkbox" name="areas[]" id="area1" value="ds">Desarrollo software<br>
+                <input type="checkbox" name="areas[]" id="area2" value="dg">diseño grafico<br>
+                <input type="checkbox" name="areas[]" id="area3" value="mk">Marketing<br>
+                <input type="checkbox" name="areas[]" id="area4" value="rh">recursos humanos<br>
+                
+            </div>
+
+
+        </fieldset>
+
+
+        <input type="submit" value="enviar">
+    </form>
+</body>
+
 </html>
