@@ -1,12 +1,13 @@
-body{
+body {
     font: 14pt sans-serif;
     width: 80%;
     margin: 0 auto;
 
-    box-shadow: 0.2em 0.2em 0.1em lightgreen;
+    box-shadow: 0.2em 0.2em 0.1em lightgray;
 }
 
-header{
+header {
+    background-color: gray;
     text-align: center;
     font-size: 2em;
 }

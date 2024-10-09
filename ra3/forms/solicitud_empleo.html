@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>solicitud empleo </title>
-    <link type="text/css" rel="stylesheet" href="/style/general.css">
-</head>
-<body>
-    <header>solicitud de empleo</header>
-    
-    <form action="/ra3/forms/solicitud_empleo.php" method="post">
-        
-    </form>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Formulario de solicitud de empleo</title>
+        <link type="text/css" rel="stylesheet" href="/style/general.css">
+        <link type="text/css" rel="stylesheet" href="/style/formularios.css">
+    </head>
+    <body>
+        <header>Solicitud de empleo</header>
+        <form method="POST" action="/ra3/forms/solicitud_empleo.php">
+            <!-- Información personal -->
+             <fieldset>
+                <legend>Datos personales</legend>
+                <label for="nombre">Nombre completo</label>
+                <input type="text" name="nombre" id="nombre" size="50" required
+                    placeholder="Introduce aquí tu nombre completo">
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" size="40" required>
+
+                <label for="clave">Clave</label>
+                <input type="password" name="clave" id="clave" size="10" required>
+
+             </fieldset>
+        </form>
+    </body>
 </html>

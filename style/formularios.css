@@ -1,0 +1,18 @@
+fieldset{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    justify-items: flex-start;
+
+    gap: 0.2em;
+}
+
+label{
+    color: darkblue;
+    justify-self: flex-end;
+}
+
+input{
+    padding: 0.2em;
+    font: inherit;
+}
