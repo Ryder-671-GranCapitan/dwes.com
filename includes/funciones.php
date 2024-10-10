@@ -1,24 +1,29 @@
 <?php
-function inicio_html($titulo, $estilos) { ?>
-<!DOCTYPE html>
-<html lang="es">
+function inicio_html($titulo, $estilos)
+{ ?>
+    <!DOCTYPE html>
+    <html lang='es'>
+
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<?php
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width;initial-scale=1'>
+        <?php
         foreach ($estilos as $estilo) {
-            "<\t\tlink rel='stylesheet' type='text/css' href='$estilo'>\n";
+            echo "\t\t<link rel='stylesheet' type='text/css' href='$estilo'>\n";
         }
-?>
-        
-        <title><?=$titulo?></title>
+        ?>
+
+        <title><?= $titulo ?></title>
     </head>
+
     <body>
-<?php
+    <?php
 }
 
-function fin_html() { ?>
-        </body>
+function fin_html()
+{ ?>
+    </body>
+
     </html>
 <?php
 }

@@ -24,43 +24,68 @@
 
             <label for="clave">Clave</label>
             <input type="password" name="clave" id="clave" size="10" required>
-            
-            <label for="linkedin">perfin de linkedin</label>
+
+            <label for="linkedin">Perfil de Linkedin</label>
             <input type="url" name="linkedin" id="linkedin" size="50">
-        </fieldset>
-
-        <fieldset>
-            <legend>detalles del trabajo</legend>
-
-            <label for="fecha_disponible">fecha disponible</label>
-            <input type="date" name="fecha_disponible" id="fecha_disponible">
-
-            <label for="hora_entrevista">hora entrevista</label>
-            <input type="time" name="hora_entrevista" id="hora_entrevista">
-
-            <label for="salario">salario</label>
-            <input type="number" name="salario" id="salario">
 
         </fieldset>
 
-
+        <!-- Detalles del trabajo -->
         <fieldset>
-            <legend>prefenrencias del puesto</legend>
+            <legend>Detalles del trabajo</legend>
+            <label for="fecha_disponible">Fecha disponibilidad</label>
+            <input type="date" name="fecha_disponible" id="fecha_disponible" required>
 
-            <label>Areas de preferencia<br></label>
+            <label for="hora_entrevista">Hora entrevista</label>
+            <input type="time" name="hora_entrevista" id="hora_entrevista" required>
+
+            <label for="salario">Expectativa salarial</label>
+            <input type="number" name="salario" id="salario" required min="1000">
+
+        </fieldset>
+
+        <!-- Preferencias del puesto -->
+        <fieldset>
+            <legend>Preferencias del puesto</legend>
+            <label>Áreas de trabajo preferidas</label>
             <div>
-                <input type="checkbox" name="areas[]" id="area1" value="ds">Desarrollo software<br>
-                <input type="checkbox" name="areas[]" id="area2" value="dg">diseño grafico<br>
+                <input type="checkbox" name="areas[]" id="area1" value="ds">Desarrollo Software<br>
+                <input type="checkbox" name="areas[]" id="area2" value="dg">Diseño gráfico<br>
                 <input type="checkbox" name="areas[]" id="area3" value="mk">Marketing<br>
-                <input type="checkbox" name="areas[]" id="area4" value="rh">recursos humanos<br>
-                
+                <input type="checkbox" name="areas[]" id="area4" value="rh">Recursos Humanos<br>
             </div>
 
+            <label>modalidad de trabajo</label>
+            <div>
+                <input type="radio" name="modalidad" id="presencial" value="presencial">presencial<br>
+                <input type="radio" name="modalidad" id="teletrabajo" value="teletrabajo">hibrido<br>
+                <input type="radio" name="modalidad" id="hibrido" value="hibrido">hibrido<br>
+            </div>
 
+            <label for="">tipo de contrato</label>
+            <select name="tipo_contrato" id="tipo_contrato">
+                <option value="">seleccione uno...</option>
+                <option value="tiempo_completo">tiempo completo</option>
+                <option value="media_jornada">media jornada</option>
+                <option value="freelance">freelance</option>
+            </select>
+
+            <label for="habilidades">habilidades</label>
+            <select name="habilidades[]" id="habilidades" multiple size="5">
+                <option value="js">javascriot</option>
+                <option value="py">python</option>
+                <option value="uxui">diseño UX/UI</option>
+                <option value="seo">seo/sem</option>
+                <option value="gp">gestion de proyectos</option>
+            </select>
+
+            <label for="comentarios">comentarios</label>
+            <textarea name="comentarios" id="comentarios" placeholder="cuentame sobre ti" rows="4" cols="40"></textarea>
         </fieldset>
 
 
-        <input type="submit" value="enviar">
+        <input type="submit" name="operacion" value="Enviar">
+
     </form>
 </body>
 

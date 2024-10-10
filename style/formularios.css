@@ -12,7 +12,7 @@ label{
     justify-self: flex-end;
 }
 
-input{
+input, select, textarea{
     padding: 0.2em;
     font: inherit;
 }
