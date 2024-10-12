@@ -73,16 +73,16 @@
     </p>
 
     <?php
-    $alumno['nombre'] ="juan gomez";
+    $alumno['nombre'] = "juan gomez";
     $alumno[0] = 4;
-    $alumno[1]= 6;
+    $alumno[1] = 6;
     $alumno[2] = 5;
     $alumno['media'] = 5;
 
     echo "El alumno {$alumno['nombre']} y tiene las notas $alumno[0], $alumno[1] y $alumno[2]";
     echo "<br>su media es {$alumno['media']}";
 
-    $alumno = ['nombre' => "pepe pepon", 0 => 5, 1 => 3, 2=>9,8,7,'media'=>8 ];
+    $alumno = ['nombre' => "pepe pepon", 0 => 5, 1 => 3, 2 => 9, 8, 7, 'media' => 8];
     ?>
 
     <h2>array bidimensional</h2>
@@ -90,9 +90,147 @@
         los array con dos dimensiones y por tanto para acceder aun elemento hacen falta 2 claves
     </p>
 
+    <h2> array bidimensionales</h2>
+
+    <?php
+    $notas = array(
+        array(3.5, 8, 9, 8),
+        array(3.5, 2, 1, 8),
+        array(3.5, 8, 1, 8),
+        array(3.5, 8, 9, 6)
+    );
+
+    echo "el elemento 2 de la comunla 3 {$notas[1][2]}<br>";
+
+    $notas[][] = 4;
+    echo "el ultimo elemento en la ultima fila es {$notas[4][0]}<br>";
+
+    $notas[3][] = 7.5;
+    echo "el ultimo elemento en la ultima fila es {$notas[3][4]}<br>";
+
+    $coches = [
+        '1234bbc' => ['marca' => 'seat', 'modelo' => 'ibiza', 'motor' => 'diesel', 'pvp' => 10000],
+        '7741bbc' => ['marca' => 'mercedes', 'modelo' => 'benz', 'motor' => 'gasolina', 'pvp' => 100000],
+        '9632bbc' => ['marca' => 'toyota', 'modelo' => 'AE84', 'motor' => 'Gaolina', 'pvp' => 100000]
+    ];
+
+    echo "el primer coche es {$coches['1234bbc']['marca']} <br>";
 
 
 
+    ?>
+
+
+
+
+    <?php
+
+    $notas = [
+        [
+            [1, 8, 5, 6],
+            [9, 3, 8, 10]
+        ],
+        [
+            [5, 8, 9, 3],
+            [7, 2, 4, 7]
+        ],
+        [
+            [1, 8, 5, 6],
+            [9, 3, 8, 10]
+        ]
+    ];
+
+    echo "nota elemto 1 1 2: {$notas[1][1][2]}<br>";
+
+
+    $notas = [
+        'juan' => [
+            'T1' => ['dews' => 4, 'dwec' => 7, 'div' => 8],
+            'T2' => ['dews' => 4, 'dwec' => 7, 'div' => 8],
+            'T3' => ['dews' => 4, 'dwec' => 7, 'div' => 8]
+
+        ],
+        'antonio' => [
+            'T1' => ['dews' => 7, 'dwec' => 4, 'div' => 3],
+            'T2' => ['dews' => 3, 'dwec' => 2, 'div' => 4],
+            'T3' => ['dews' => 9, 'dwec' => 9, 'div' => 5]
+
+        ]
+    ];
+    echo "nota elemto 1 1 2: {$notas['antonio']['T1']['dews']}<br>";
+
+    ?>
+
+    <h2>recorrer el array</h2>
+    <?php
+    $numeros = [1, 8, 6, 3, 1, 7, 8];
+    for ($i = 0; $i < count($numeros); $i++) {
+        echo "$numeros[$i] <br>";
+    };
+    // para cualquier tipo de array tenemos el bucle foreach
+    foreach ($numeros as $numero) {
+        echo "el numero es: $numero <br>";
+    }
+
+    $alumno['nombre'] = "juan gomez";
+    $alumno[0] = 4;
+    $alumno[1] = 6;
+    $alumno[2] = 5;
+    $alumno['media'] = 5;
+    foreach ($alumno as $clave => $valor) {
+        echo "el alumno es: $clave y $valor <br> ";
+    };
+
+    /*
+
+    echo "<h2> recorrer un array multidimensional </h2>";
+    for ($i=0; $i < count($notas); $i++) { 
+        echo "recorrido del elemento $i";
+        for ($j=0; $j < count($notas[$i]); $j++) { 
+            echo "fila $i comuna $j. {$notas [$i][$j]}<br>";
+        }
+    }
+*/
+
+    foreach ($notas as $alumno => $trimestres) {
+        echo "Notas del alumno: $alumno <br>";
+
+        foreach ($trimestres as $trimestre => $modulos) {
+            echo "Notas del trimestre: $trimestre <br>";
+
+            foreach ($modulos as $modulo => $nota) {
+                echo "Módulo: $modulo, Nota: $nota <br>";
+            }
+
+            echo "-----------------------<br>";
+        }
+
+        echo "======================<br>";
+    }
+
+    echo "array de los coches <br>";
+    foreach ($coches as $matricula => $coche) {
+        echo "coche con matricula: $matricula <br>";
+        foreach ($coche as $clave => $valor) {
+            echo "$clave: $valor <br>";
+        };
+        echo "--------------------";
+    }
+
+    ?>
+
+
+
+
+
+
+
+
+
+
+
+
+    <br><br><br><br><br><br><br><br>
 
 
 

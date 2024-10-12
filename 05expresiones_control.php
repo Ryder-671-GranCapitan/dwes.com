@@ -397,15 +397,14 @@
 
     <?php
 
-    $numero = rand(1,100);
-    if ($numero % 2 ==0) {
+    $numero = rand(1, 100);
+    if ($numero % 2 == 0) {
         echo "el numero $numero es par <br>";
-    }
-    else {
+    } else {
         echo "el numero $numero es impar <br>";
     }
-    
-    for ($i=1; $i <= 10; $i++) { 
+
+    for ($i = 1; $i <= 10; $i++) {
         echo "$i x $numero = ", $i * $numero . "<br>";
         $i--;
     }
@@ -414,6 +413,10 @@
     }
 
     ?>
+
+
+
+    <br><br><br><br><br>
 
 </body>
 
