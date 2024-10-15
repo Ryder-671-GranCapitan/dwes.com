@@ -1,270 +1,260 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Primer script</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <script src='main.js'></script>
-    <noscript>No tienes soporte de javascript</noscript>
-</head>
-<body>
-    <h1>Tercer script</h1>
-
-    <h2>tipos de datos en php</h2>
-    <p>
-        estos datos son escalares(prinitivos)
-    </p>
+<html lant='es'>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width;initial-scale=1'>
+        <title>Tipos de datos</title>
+    </head>
+    <body>
+    <h1>Tipos de datos: 02tipos_datos.php</h1>
+    <p>Tipos de datos escalares (primitivos)</p>
     <ul>
-        <li>booleanos</li>
-        <li>numerico entero</li>
-        <li>en coma flotante</li>
-        <li>cadena de caracteres</li>
+        <li>Booleanos</li>
+        <li>Numérico entero</li>
+        <li>En coma flotante</li>
+        <li>Cadena de caracteres</li>
     </ul>
-
-    <p>datos compuestos </p>
-
+    <p>Datos compuestos</p>
     <ul>
-        <li>arrays</li>
-        <li>objetos</li>
-        <li>callable (nombres de funcion o metodos, todo lo invocable)</li>
-        <li>iterable(elemento recorrible)</li>
-        
+        <li>Arrays</li>
+        <li>Objetos</li>
+        <li>Callable</li>
+        <li>Iterable</li>
     </ul>
-
-    <p>tipos especiales </p>
+    <p>Tipos especiales</p>
     <ul>
-        <li>resource (puntero a archivo)</li>
+        <li>Resource</li>
         <li>NULL</li>
     </ul>
-
-    <h2>boolean</h2>
-    <p>inicialmente las constantes True y False. sin embargo otro tipos de datos tiene conversion inplicita al tipo booleano</p>
+    
+    <h2>Boolean</h2>
+    <p>Inicialmente las constantes True y False. Sin embargo, otros tipos
+        de datos tienen conversión implícita al tipo booleano</p>
     <ul>
-        <li>numerico entero 0 y el -0False. Cualquier otra cosa es true</li>
-        <li>numerico en coma flotante 0.0 y el -0.0False. otro valor es True</li>
-        <li>una array con 0 elementos es False. con elementos es True</li>
-        <li>el tipo especial es NULL es false, otro elemento es True</li>
-        <li>una variable no definida es False </li>
+        <li>Numérico entero: 0 y el -0 es False, cualquier otra cosa es True</li>
+        <li>Numérico en coma flotante: 0.0 y -0.0 es False, otro valor es True</li>
+        <li>Un array con 0 elementos es False, con elementos es True</li>
+        <li>El tipo especial NULL es False, otro valor distinto de NULL es True</li>
+        <li>Una variable no definida es False</li>
     </ul>
 
 <?php
-    $valor_booleano = true;
+    $valor_booleano = True;
     $edad = 20;
     $mayor_edad = $edad > 18;
 
-    echo "mayor de edad es booleano:" . is_bool($mayor_edad);
+    echo "Mayor de edad es booleano: " . is_bool($mayor_edad);
 
-    $dinero = 0;
-    if ($dinero ) {
-        // equivale a si $dinero != de 0
-        // por lo que podria darse -50 dinero y aun asi saltaria la frase
-        echo "soy rico";
-    }
-    else echo "estoy arruinado< br>";
+    $dinero = 10;
+    // equivalente a $dinero != 0 
+    if( $dinero ) echo "<br>Soy rico<br>";
+    else echo "<br>Estoy arruinado<br>";
+
+    $mi_nombre = "Juan";
+    if( $mi_nombre ) echo "Me llamo $mi_nombre<br>";
+    else echo "No tengo nombre<br>";
 
 ?>
 
-    <h2>Enteros</h2>
-    <p>numeros enteros en php son de 32 bits. pueden expresarse en diferentes notaciones</p>
-
+<h2>Enteros</h2>
+<p>Números enteros en PHP son de 32 bits (depende de la plataforma). Pueden expresarse
+    en diferentes notaciones</p>
 <?php
-    $numero_entero = 123;
+    $numero_entero = 1234;
+    echo "El número entero es $numero_entero<br>";
+
     $numero_negativo = -123;
-    echo " $numero_entero  $numero_negativo";
+    echo "Un número negativo con - delante: $numero_negativo<br>";
 
+    // Si quiero expresar un número entero en octal
     $numero_octal = 0123;
-    echo "0123 es en octal $numero_octal <br>";
+    echo "El número 0123 en octal es en decimal: $numero_octal<br>";
 
-    echo "el numero $numero_octal en octal es: " .decoct($numero_octal) . "<br>";
+    // Puedo mostrar un número entero en octal
+    echo "El número $numero_octal es en octal " . decoct($numero_octal) . "<br>";
 
-    $numero_hexadecimal = 0x8ae;
-    echo "el numero hexadecimal 0x8ae es $numero_hexadecimal <br>";
-    echo "el numero hexadecimal $numero_hexadecimal en hexadecimal es :" . dechex($numero_hexadecimal) . "<br>";
+    // Número entero en hexadecimal
+    $numero_hex = 0x8AE;
+    echo "El número 0x8AE en hexadecimal es en decimal: $numero_hex<br>";
 
-    $numero_binario = 0b110101;
-    echo "el numero binario 0x8ae es $numero_binario <br>";
-    echo "el numero binario $numero_binario en hexadecimal es :" . decbin($numero_binario) . "<br>";
+    // Mostrar un número expresado en Hexadecimal
+    echo "El numero $numero_hex en hexadecimal es " . dechex($numero_hex) . "<br>";
+
+    // Un número entero en binario
+    $numero_binario = 0b110101101;
+    echo "El número 110101101 es en decimal: $numero_binario<br>";
+
+    // Mostrar un número expresado en binario
+    echo "El número $numero_binario en binario es " . decbin($numero_binario) . "<br>";
+
 ?>
 
-    <h2>Numeros en punto flotante</h2>
-    <p>el separador decimal es el . y se pueden expresar numeros muy grandes o muy pequeños mediante la notacion cientifica con base 10</p>
+<h2>Números en punto flotante</h2>
+<p>El separador decimal es el punto . y se pueden expresar números muy grandes 
+    muy pequeños mediante la notación cientifica con base 10</p>
 
 <?php
     $pi = 3.14159;
-    echo "el numero pi es $pi <br>";
-    echo "el numero pi es $pi redondeado es " . round($pi,2) . "<br>";
-    
+    echo "El número PI es $pi<br>";
+    echo "El pi con 4 decimales es " . round($pi, 4) . "<br>";
 
     $inf_int = 7.9e13;
-    echo "informacion que circula en internet en un dia $inf_int <br>";
+    echo "Información que circula en Internet en un día $inf_int<br>";
 
-    $inf_int = 0.2e-9;
-    echo "negativo muy muy pequeño $inf_int <br>";
+    $tamaño_virus = 0.2e-9;
+    echo "Un virus tiene un tamaño de $tamaño_virus<br>";
+
 
 ?>
+<h2>Cadenas de caracteres</h2>
+<p>Un string o cadena es una serie de caracteres donde cada carácter equivale a un byte.
+    Estos significa que PHP solo admite 256 caracteres y por ello no ofrece soporte
+    nativo a utf8. Un literal de tipo string se expresa de 4 formas:</p>
+<ul>
+    <li>Comillas simples</li>
+    <li>Comillas dobles</li>
+    <li>Heredoc</li>
+    <li>Nowdoc</li>
+</ul>        
 
-    <h2>cadena de caracteres</h2>
-    <p>un string o cadena es una serie de caracteres donde cada caracter equivale a un byte. esto significa que php solo admite 256 caractares. por lo que no ofrece soporte nativo a utf8. un literal de tipo string se expresa de 4 formas</p>
-
-    <ul>
-        <li>comillas simples</li>
-        <li>comillas dobles</li>
-        <li>heredox</li>
-        <li>nowdoc</li>
-    </ul>
-    
-    <h3>comillas simples</h3>
+<h3>Comillas simples</h3>
 <?php
-    //una cadena encerrada entre comillas simples
-    //solo admite el caracter de escape \'
+    // Una cadena encerrada entre comillas simples
+    // Solo admite el carácter escape \' \\
 
-    echo 'esto es una cadena sencilla<br>';
-    echo 'esto es una cadena sencilla
-            si quiero puede
-            ser en varias lineas<br>';
+    echo 'Esto es una cadena sencilla<br>';
+    echo 'Puedo poner una cadena
+    en varias líneas
+    por que la sentencia
+    no acaba hasta
+    el punto y coma<br>';
 
-    //no se reconocen caracteres de escape excepto ' \
-    echo 'el mejor pub de la ciudad es 0\'donlet<br>';
-    echo 'la raiz del disco duro es C:\\<br>';
+    // No se reconocen caracteres de escape excepto ' y el \
+    echo 'El mejor pub de la ciudad es O\'Donnel<br>';
+    echo 'La raíz del disco duro es C:\<br>';
+    echo 'La raíz del disco duro es C:\\<br>';
 
-    //el salto de linea no se exapnde
-    echo 'la raiz del disco \n duro es C:\\<br>';
+    // El salto de línea no se expande
+    echo 'Esta cadena tiene\nmás de una línea<br>';
 
-    //no interpola variables 
-    echo 'mi edad es $edad<br>' ;
-
+    // No interpola variables
+    $mi_nombre = "Manuel";
+    echo 'Hola, $mi_nombre, ¿cómo estas?<br>';
 
 ?>
-
-    <h3>comillas dobles</h3>
-    <p>la forma habitual de expresar cadenas de caracteres ya que expande los caracteres de escape y las variables</p>
+    <h3>Comillas dobles</h3>
+    <p>La forma habitual de expresar cadenas de caracteres ya que expande los caracteres
+        de escape y las variables.</p>
 <?php
+    $cadena = "Esto es una cadena con comillas dobles";
+    echo "Es una cadena un objeto? " . is_object($cadena) . "<br>";
+    if( is_object($cadena) ) echo "Las cadenas en PHP son objetos<br>";
+    else echo "LAS CADENAS EN PHP NO SON OBJETOS<br>";
 
-    $cadena = " esto es una cadena con comillas dobles";
-    echo "es una cadena de un objeto?" . is_object($cadena) . "<br>";
+    $con_secuencias_esc = "\t\tEl símbolo \$ se emplea para las variables\n y
+    si lo quieres en una cadena hay que escaparlo con \\. Es mejor usar \" para
+    delimitar las cadenas en lugar de '<br>";
 
-    if (is_object($cadena)) echo "de echo las candeas son objetos";
-    else echo "de echo no es una cadena";
-    
-    $con_secuencias = "\t\ el simbolo \$ se emplea para as variables \n y 
-    si lo quieres en una cadena que escaparlo con \\ mejor usar \"para 
-    delimitar cadenas";
-
-    echo $cadena;
+    echo $con_secuencias_esc;
 ?>
 
-    <h3>cadenas HEREDOC</h3>
-    <p>
-        es una cadena muy larga que empieza con <<< le sigue un identificador  y justo despues un salto de linea.
-        a continuacion se escribe la cadena con los saltos de linea que necesitemos, podemos interpolar variables y 
-        poner caracteres de escape. para terminar hay que hacer un salto de linea y volver a poner el identificador
-    </p>
-
+    <h3>Cadenas HEREDOC</h3>
+    <p>Es una cadena muy larga que comienzan con <<< le sigue un identificador y justo
+    después un salto de línea. A continuación se escribe la cadena, con los saltos de línea
+    que necesitemos, podemos interpolar variables y poner caracteres de escape. Para finalizar
+    hay que hacer un salto de línea y volver a poner el identificador.</p>
 <?php
     $cadena_hd = <<<HD
-    esto es una cadena heredoc 
-    que respeta los saltos de liena
-    que respeta variables $edad
-    ademas secuencias de escape 
-    el identificador no neceista \$
-    y tampoco usamos \"
-    simplemente acabamos con un salto de linea 
-    mas el identificador <br>
+    Esto es una cadena
+    heredoc que respeta los
+    saltos de línea, le puedo
+    poner variables como $mi_nombre y
+    además secuencias de escape. El 
+    identificador no necesita \$ y tampoco
+    usamos \", simplemente la escribimos y
+    acabamos con un salto de línea 
+    más el identificador<br>
     HD;
 
-    echo $cadena_hd
+    echo $cadena_hd;
 ?>
 
-    <h3>cadena NOWDOW</h3>
-    <p>
-        la cadena nowdow es como la cadena heredoc con comillas simples
-        no se interpolan variables ni se reconocen secuencias de escape mas alla de \\'
-    </p>
+    <h3>Cadena NOWDOC</h3>
+    <p>La cadena Nowdoc es como Heredoc con comillas simples. No se interpolan variables
+        ni se reconocen secuencias de escapa más allá de \ y '. Si se respetan los
+        saltos de líneas</p>
 <?php
     $cadena_nd = <<<'ND'
-    esto es ununa cadena no NOWDOW 
-    y el salto de linea no lo respeta
+    Esto es una cadena nowdoc
+    y el salto de línea no lo respeta,
     no puedo meter variables
-    y solo reconoce \\ y \'. <br>
+    y solo reconoce \\ y \'.<br>
     ND;
 
-    echo $cadena_nd
+    echo $cadena_nd;
 ?>
 
-
-    <h2>conversiones de tipos de datos</h2>
-    <p>
-        hay dos tipos de conversion. las implicitas y las explicitas
-        las implicitas ocurren cuando en una expresion hay operandos de diferente tipo. php convierte algunos de ellos para evaluar la expresion
-    </p>
+    <h2>Conversión de tipos de datos</h2>
+    <p>Hay dos de conversiones: implícitas y explícitas. Las primeras ocurren cuando
+        en una expresión hay operandos de diferente tipo. PHP convierte algunos 
+        de ellos para evaluar la expresión.</p>
 <?php
     $cadena = "25";
     $numero = 8;
-    $booldeano = true;
-    $resultado = $cadena + $numero + $booldeano;
-
-    echo $resultado . "<br>";
+    $booleano = True;
+    $resultado = $cadena + $numero + $booleano;
+    echo "El resultado es $resultado<br>";
 ?>
-    <p>
-        IMPORTANTE
-        cuando se hace una conversion implicita solo afecta al operando pero no a la variable
-        es decir. la conversion de cadena a entero solamente para evaluar la expresion
-        pero cadena sigue siendo de tipo STRING 
-    </p>
-
+    <p>¡¡¡IMPORTANTE!!!. Cuando se hace una conversión implícita solo afecta
+        al operando, pero no a la variable. Es decir, la conversión de $cadena a entero
+        solamente para evaluar la expresión, pero $cadena sigue siendo de tipo string</p>
 <?php
     $flotante = 3.5;
-    $resultado = $cadena + $flotante + $numero + $booldeano;
-    echo $resultado . "<br>";
+    $resultado = $cadena + $flotante + $numero + $booleano;
+    echo "El resultado ahora es $resultado<br>";
 
-    $cadena = "25 marranos dan mucho problema";
+    $cadena = "25 marranos dan mucho provecho, mejor que 7 lechones";
     $resultado = $numero + $cadena;
-    echo $resultado;
-
-    
+    echo "El resultado es $resultado<br>";
+    echo "Después de la última conversión<br>";
 ?>
-
-
-    <p>
-        las conversiones explicitas se conocen como casting o moldeo y se hacen 
-        precediendo la expresion con el tipo de datos a convertir entre parentesis
-    </p>
+    <p>Conversiones explícitas se conocen como casting o moldeo y se hacen
+        precediendo la expresión con el tipo de datos a convertir entre
+        paréntesis</p>
 
 <?php
-    //si quiero convertir a entero -> (int)expresion
-    //si quiero convertir a floar -> (float)expresion
-    //si quiero convertir a string -> (string)expresion
+    // Si quiero convertir a un entero ->  (int)expresión
+    // Si quiero convertir a float ->      (float)expresión
+    // Si quiero convertir a string ->     (string)expresión
 
-    $valor_booleano = true;
+    echo "Conversiones a entero<br>";
+    $valor_booleano = True;
     $valor_convertido = (int)$valor_booleano;
-
-    echo "el valo convertido es $valor_convertido";
-
-    $valor_float = 3.1258;
+    echo "El valor convertido a entero es $valor_convertido<br>";
+    $valor_float = 3.14159;
     $valor_convertido = (int)$valor_float;
-    echo "el valor convertido es".$valor_convertido . "<br>";
+    echo "El valor convertido a entero es $valor_convertido<br>";
+    $valor_redondeado = round($valor_float,0);
 
-    $valor_cadena = "12345";
+    $valor_cadena = "123";
     $valor_convertido = (int)$valor_cadena;
-    echo "el valor convertido es ".$valor_convertido . "<br>";
+    echo "El valor convertido a entero es $valor_convertido<br>";
+
+
+
 ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <hr>
-    <p>Fin del script</p>
-</body>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+    </body>
 </html>

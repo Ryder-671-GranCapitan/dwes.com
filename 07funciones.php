@@ -1,5 +1,5 @@
 <?php
-/* Funciones en PHP
+    /* Funciones en PHP
 
     Conjunto de sentencias con un nombre asociado
     que se ejecutan a discreción del desarrollador,
@@ -105,126 +105,118 @@
 
     */
 
-define("PI", 3.14159);
+    define("PI",3.14159);
 
-function area_triangulo($base, $altura)
-{
-    $area = $base * $altura / 2;
+    function area_triangulo($base, $altura) {
+        $area = $base * $altura / 2;
 
-    return $area;
-}
-
-function area_triangulo2(&$base, &$altura)
-{
-    echo "1.- Dentro de la función: $base y $altura<br>";
-    $base = 10;
-    $altura = 20;
-
-    $area = $base * $altura / 2;
-
-    echo "2.- Dentro de la función: $base y $altura<br>";
-
-    return $area;
-}
-
-function volumen_cilindro($radio, $altura = 10)
-{
-    $area_base = PI * $radio ** 2;
-    $volumen = $area_base * $altura;
-
-    return $volumen;
-}
-
-function area_rectangulo(float $base, float $altura)
-{
-    echo "Función a_r: " . gettype($base) . "<br>";
-    echo "Función a_r: " . gettype($altura) . "<br>";
-
-    return $base * $altura;
-}
-
-function media_aritmetica(...$numeros)
-{
-    $suma = 0;
-    foreach ($numeros as $numero) {
-        $suma += $numero;
+        return $area;
     }
 
-    return $suma / count($numeros);
+    function area_triangulo2(&$base, &$altura) {
+        echo "1.- Dentro de la función: $base y $altura<br>";
+        $base = 10;
+        $altura = 20;
 
-    // func_num_args(); -> Devuelve el nº de argumentos pasados
+        $area = $base * $altura / 2;
 
-}
+        echo "2.- Dentro de la función: $base y $altura<br>";
 
-function circulo_y_circunferencia($radio): array
-{
-
-    $resultado[] = PI * $radio ** 2;
-    $resultado[] = 2 * PI * $radio;
-
-    return $resultado;
-}
-
-function area_rectangulo2($base, $altura): ?float
-{
-    if ($base < 0 || $altura < 0) {
-        $area = null;
-    } else {
-        $area = $base * $altura;
+        return $area;
     }
 
-    return $area;
-}
+    function volumen_cilindro($radio, $altura = 10) {
+        $area_base = PI * $radio ** 2;
+        $volumen = $area_base * $altura;
 
-function Suma()
-{
-    //global $a, $b;
+        return $volumen;
+    }
 
-    //$resultado = $a + $b;
-    $a = 9;
-    $resultado = $a + $GLOBALS['b'];
+    function area_rectangulo(float $base, float $altura) {
+        echo "Función a_r: " . gettype($base) . "<br>";
+        echo "Función a_r: " . gettype($altura) . "<br>";
 
-    $resultado = $GLOBALS['a'] + $GLOBALS['b'];
+        return $base * $altura;
+    }
 
-    return $resultado;
-}
+    function media_aritmetica( ...$numeros ) {
+        $suma = 0;
+        foreach( $numeros as $numero) {
+            $suma += $numero;
+        }
 
-function contador_ejecuciones()
-{
-    static $numero_ejecuciones = 0;
-    $numero_ejecuciones++;
+        return $suma / count($numeros);
 
-    echo "La función se ha ejecutado $numero_ejecuciones veces<br>";
-}
+        // func_num_args(); -> Devuelve el nº de argumentos pasados
 
-function factorial($numero)
-{
-    /*
+    }
+
+    function circulo_y_circunferencia($radio): array {
+
+        $resultado[] = PI * $radio ** 2;
+        $resultado[] = 2 * PI * $radio;
+
+        return $resultado;
+    }
+
+    function area_rectangulo2($base, $altura): ?float {
+        if( $base < 0 || $altura < 0 ) {
+            $area = null;
+        }
+        else {
+            $area = $base * $altura;
+        }
+
+        return $area;
+
+    }
+
+    function Suma() {
+        //global $a, $b;
+
+        //$resultado = $a + $b;
+        $a = 9;
+        $resultado = $a + $GLOBALS['b'];
+
+        $resultado = $GLOBALS['a'] + $GLOBALS['b'];
+
+        return $resultado;
+    }
+
+    function contador_ejecuciones() {
+        static $numero_ejecuciones = 0;
+        $numero_ejecuciones++;
+
+        echo "La función se ha ejecutado $numero_ejecuciones veces<br>";
+    }
+
+    function factorial($numero) {
+        /*
         !n = n * (n-1) * (n-2) * ... 1
         !n = n * !(n-1)
         */
 
-    if ($numero == 1) {
-        $factorial = 1;
-    } else {
-        $factorial = $numero * factorial($numero - 1);
-    }
+        if( $numero == 1 ) {
+            $factorial = 1;
+        }
+        else {
+            $factorial = $numero * factorial($numero - 1);
+        }
 
-    return $factorial;
-}
+        return $factorial;
+
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Funciones</title>
-</head>
-
-<body>
-    <h1>Funciones</h1>
-    <?php
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Funciones</title>
+    </head>
+    <body>
+        <h1>Funciones</h1>
+<?php
     $base = 8;
     $altura = 3;
 
@@ -265,7 +257,7 @@ function factorial($numero)
     echo "El área del rectángulo es $area<br>";
 
     // Número de argumento variable
-    $media = media_aritmetica(3, $area, 8, 9, 2.5, $volumen);
+    $media = media_aritmetica(3, $area, 8, 9, 2.5, $volumen );
     echo "La media de los números anteriores es $media<br>";
 
     // Devolución de más de un valor
@@ -298,23 +290,22 @@ function factorial($numero)
     contador_ejecuciones();
 
     // Función recursiva
-    $numeros = [6, 4, 9, 2];
-    foreach ($numeros as $numero) {
+    $numeros = [ 6, 4, 9, 2];
+    foreach( $numeros as $numero ){
         $factorial = factorial($numero);
         echo "El factorial de $numero es $factorial<br>";
     }
 
-    ?>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+?>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
-</body>
-
+    </body>
 </html>

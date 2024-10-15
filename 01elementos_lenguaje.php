@@ -1,85 +1,84 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Primer script</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <script src='main.js'></script>
-    <noscript>No tienes soporte de javascript</noscript>
-</head>
-<body>
-    <h1>Segundo script</h1>
-    <h2>entrada y salia </h2>
-    <p>
-        la entrada de datos en PHP es con un formulario html o con un enlace. 
-        la salida de datos se produce con la funcion echo y su forma abreviada, y la funcion print.
-        ademas para salida de datos con formato tenemos printf
-    </p>
-    <h3>funcion echo</h3>
+<html lant='es'>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width;initial-scale=1'>
+        <title>Elementos del lenguaje</title>
+    </head>
+    <body>
+    <h1>Elementos del lenguaje</h1>
 <?php
-    echo "<p>la funcion echo emite el resultado del aexpresion a la salida. se puede usar com funcion como contruccion del lenguaje(sin parenteis)</p>";
-    echo "<p>esto es un parrafo HTML enviado por echo</p>";
+# Script: 01elementos_lenguaje.php
+?>
 
-    $nombre = "juan";
-    echo "hola ", $nombre, "como estas? <br>";
-    //echo ("hola ", $nombre, "como estas? <br>"); no sirve, hay mas de un argumento
+    <h2>Entrada y salida</h2>
+    <p>La entrada de datos en PHP es con un formulario o con un enlace. La salida
+        de datos se produce con la función echo, y su forma abreviada, y la función print.
+        Además, para salida de datos con formato tenemos printf.
+    </p>
+    <h3>Función echo</h3>
+<?php
+    echo "<p>La función echo emite el resultado de una expresión a la salida. Se puede
+    usar como función o como construcción del lenguaje (sin paréntisis)</p>";
+    echo "<p>Esto es un párrafo HTML enviado por echo</p>";
 
-    //quiero un salto de linea al final de la lunea
-    echo "hola ", $nombre, " como estas?  con salto de linea<br>\n ves, he saltado de liena en el codigo";
+    $nombre = "Juan";
+    echo "Hola", $nombre, "cómo estas?<br>";
+    
+    // echo("Hola", $nombre, "cómo estas?"); No sirve, hay más de un argumento
+    echo ("Hola, juan, cómo estas?<br>");
 
-    $nombre = "pepe";
-    $apellidos = "rider";
+    // Quiero un salto de línea al final de la línea
+    echo "Hola, esta línea acaba en un salto\n";
+    echo "Supuestamente esta línea es la siguiente a la anterior\n y esta va después";
 
-    echo "<br> mi nombre es $nombre y mi apellido $apellidos";
+    $nombre = "José";
+    $apellidos = "Gómez";
 
-    echo "<br> mi nombre es " . $nombre . " y mi apellido es " . $apellidos;
+    echo "<br>Mi nombre es $nombre y mi apellido es $apellidos<br>";
 
-    echo "<br> uno mas dos es: ", 1+2 , " debe ser 3";
-    //el operador . NO tiene precedencia sobre el operador +
+    echo "<br>Mi nombre es " . $nombre . " y mi apellidos es " . $apellidos . "<br>";
 
-    echo "<br> uno mas dos es: ". 1+2.3 . " debe ser 3";
+    echo "<br>Uno más dos son ", 1 + 2, " y tiene que haber salido 3<br>";
 
-    echo"<h4> forma abreviada de echo</h4>";
-    echo "<p>cuando hay que enviar a la salida el resultado de una expresion pequeña 
-            disponemos de la forma abreciada de echo que permite intercalarse con el codigo html con menos esfuerzo </p>";
+    // El operador . no tiene precedencia sobre el operador +
+    echo "<br>Uno más dos son " . 1 + 2 . " y tiene que haber salido 3<br>";
+
+    echo "<h4>Forma abreviada de echo</h4>";
+    echo "<p>Cuando hay que enviar a la salida el resultado de una expresión pequeña 
+    disponemos de la forma abreviada de echo que permite intercarlarse en el código
+    HTML con menos esfuerzo";
 
     $tiene_portatil = True;
 
 ?>
-    <!-- Forma abreviada de echo --->
-    <?= $nombre . " " . $apellidos ?>
+    <!-- La forma abreviada de echo va dentro de HTML -->
+    <!-- &lt;?= expresion?&gt; equivale a &lt?php echo expresión ?&gt; -->
 
-    <!-- uso habitual Valores de formulario por defecto --->
-    <input type="text" name="nombre" size="15" value="<?=$nombre ?>"> <br>
+    <p>Mi nombres es <?= $nombre . " " . $apellidos?> y estoy programando en PHP</p>
 
-    <input type="checkbox" name="portatil" <?= $tiene_portatil ? 'cheked' : ''?>> es portaril?
+    <!-- Uso muy habitual. Valores por defecto en controles de formulario -->
+    <input type='text' name='nombre' size='15' value='<?=$nombre?>'><br>
+    <input type='checkbox' name='portatil' <?= $tiene_portatil ? 'checked' : ''?>>¿Tienes portátil?    
 
-    <input type="text" name="apellido" size="15" value="<?=$apellidos ?>"> <br>
-
-    <!-- rafa consejo: las cadenas en pho con "" y en html con '' --->
-
-
-
-
-    <h3>funcion print</h3>
-
-<?php 
-    print "esto es una cadena con print";    
-?>
-
-    <h3>funcion printf</h3>
-<?php 
-    $pi = 3.14;
-    $radio  = 3;
-    $circunferencia = 2 * $pi * $radio;
-    printf("<br> la circunferencia de radio %d es %.2f",$radio, $circunferencia);
+    <!-- Consejo: Las cadenas en PHP con " y en HTML con ' -->
+<?php
+    echo "<br><input type='text' name='apellidos' size='50'>";
     
+?>  
+    <h3>Función print</h3>
+    <p>Funciona igual que echo</p>
+<?php
+    print "<p>Esto es una cadena\nque tiene más de una línea\ny se envían a la salida<p>";
+    print "<p>Mi nombre es $nombre $apellidos<br>";
 ?>
-    <h2>tipos de datos</h2>
 
-
-<hr>
-<p>Fin del script</p>
-</body>
+    <h3>Función printf</h3>
+<?php
+    $pi = 3.14159;
+    $radio = 3;
+    $circunferencia = 2 * $pi * $radio;
+    printf("<br>La circunferencia de radio %d es %10.2f", $radio, $circunferencia);
+?>
+    </body>
 </html>

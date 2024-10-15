@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Primer script</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <script src='main.js'></script>
-    <noscript>No tienes soporte de javascript</noscript>
-</head>
-<body>
-    <h1>Primer Script</h1>
-    
-
+<html lant='es'>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width;initial-scale=1'>
+        <title>Primer Script PHP</title>
+    </head>
+    <body>
+    <h1>Primer Script en PHP</h1>
 <?php
-    // Script: 00primer_script.php 
-    echo "esto es un cript php <br>";
-    echo "esto ejecuta el motor de php<br>";
 
-    //sentencia compleja
-    {
-        echo "primera sentencia en bloque <br>"; // se puede comentar en cualquier sitio
-        echo "segunda sentencia en bloque <br>";
+// Script: 00primer_script.php
 
-        /*comentario
-        multi linea */
+echo "Esto es un script en PHP<br>";  // La sentencia echo emite una expresión a la respuesta
+echo "Esto lo ejecuta el motor de PHP<br>";
 
-        #tambien se puede comentar asi
-    }
+# Sentencia compuesta
+{
+    echo "Primer sentencia en un bloque de sentencias<br>";
+    echo "Segunda sentencia en un bloque de sentencias<br>"; # Este es el último echo
+}
+
+/*
+Esto es un comentario multilínea
+que ocupa varias
+líneas para poner
+explicaciones más largas.
+*/
+
 ?>
 <hr>
-<p>Fin del script</p>
+<p>Fin del script PHP</p>
 </body>
 </html>
+
+
