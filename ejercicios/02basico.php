@@ -232,11 +232,303 @@
     $numero = 5;
     $producto = 0;
 
-    for ($i=0; $i < $numero; $i++) { 
-            $producto += $i;
+    for ($i = 0; $i < $numero; $i++) {
+        $producto += $i;
     }
     echo $producto;
     ?>
+
+
+    <h3>31</h3>
+    <p>
+        Crear un script PHP que obtenga el cociente y el resto de dos números enteros positivos mediante restas sucesivas.
+    </p>
+
+    <?php
+    // Definir los números
+    $dividendo = 17;
+    $divisor = 3;
+
+    // Verificar que el divisor no sea cero
+    if ($divisor == 0) {
+        echo "El divisor no puede ser cero.";
+        exit();
+    }
+
+    // Inicializar el cociente y el resto
+    $cociente = 0;
+    $resto = $dividendo;
+
+    // Realizar restas sucesivas
+    while ($resto >= $divisor) {
+        $resto -= $divisor;
+        $cociente++;
+    }
+
+    // Mostrar los resultados
+    echo "Cociente: " . $cociente . "\n";
+    echo "Resto: " . $resto . "\n";
+    ?>
+
+    <h3>32</h3>
+    <p>
+        Crear un script PHP que muestre la tabla de multiplicación de un número entero positivo entre 1 y 10 obtenido aleatoriamente.
+    </p>
+    <?php
+    $numero = rand(1, 10);
+    for ($i = 0; $i <= 10; $i++) {
+        $resu = $numero * $i;
+        echo "$numero x $i = $resu <br>";
+    }
+
+    ?>
+
+    <h3>33</h3>
+    <p>
+        Crear un script PHP que muestre la lista de intereses y el capital acumulado producido cada año por un capital inicial C, con un interés anual R durante N años. El interés obtenido anualmente se calcula con la fórmula:
+        Supongamos que el capital inicial es 1.000.000€, el interés anual del 4% y seaplica durante 20 años. El capital se incrementa con el interés producido cada año
+    </p>
+
+    <?php
+    // Definir los valores iniciales
+    $capital_inicial = 1000000; // 1.000.000 €
+    $interes_anual = 0.04; // 4%
+    $anios = 20; // 20 años
+
+    // Variables para guardar el capital y mostrar los resultados
+    $capital_acumulado = $capital_inicial;
+
+    echo "Año\tInterés producido\tCapital acumulado\n";
+    echo "--------------------------------------------------\n";
+
+    // Bucle para calcular los intereses y el capital acumulado cada año
+    for ($i = 1; $i <= $anios; $i++) {
+        $interes_anual_producido = $capital_acumulado * $interes_anual;
+        $capital_acumulado += $interes_anual_producido;
+
+        // Mostrar los resultados
+        echo $i . "\t" . number_format($interes_anual_producido, 2, ',', '.') . "€\t\t" . number_format($capital_acumulado, 2, ',', '.') . "€\n";
+    }
+    ?>
+
+
+    <h3>34</h3>
+    <p>
+        Crear un script PHP que asigna a variables dos números enteros positivos N y M, y luego calcule y muestre los múltiplos de N menor que M.
+    </p>
+
+    <?php
+    // Asignar valores a las variables N y M
+    $N = 7;  // Número entero positivo N
+    $M = 50; // Límite superior M
+
+    // Verificar que los números sean positivos
+    if ($N <= 0 || $M <= 0) {
+        echo "N y M deben ser números enteros positivos.";
+        exit();
+    }
+
+    echo "Múltiplos de $N menores que $M:\n";
+
+    // Calcular y mostrar los múltiplos de N menores que M
+    for ($i = 1; $i * $N < $M; $i++) {
+        echo $i * $N . "\n";
+    }
+    ?>
+
+    <h3>35</h3>
+    <p>
+        Crear un script PHP que calcule y muestre el factorial de un número.
+    </p>
+
+    <?php
+    // Definir el número para el que se va a calcular el factorial
+    $numero = 5; // Puedes cambiar este valor por cualquier otro número entero positivo
+
+    // Verificar que el número sea no negativo
+    if ($numero < 0) {
+        echo "El factorial no está definido para números negativos.";
+        exit();
+    }
+
+    // Inicializar la variable del factorial
+    $factorial = 1;
+
+    // Calcular el factorial
+    for ($i = 1; $i <= $numero; $i++) {
+        $factorial *= $i;
+    }
+
+    // Mostrar el resultado
+    echo "El factorial de $numero es: $factorial\n";
+    ?>
+
+    <h3>36</h3>
+    <p>
+        Crear un script PHP que genera aleatoriamente 15 veces un número y muestre un mensaje si el número es divisible por 2, por 3 o por ninguno de ellos.
+    </p>
+    <?php
+    for ($i = 0; $i < 15; $i++) {
+        $numero = rand(0, 100);
+        if ($numero == 0) {
+            echo "el numero $numero es 0 <br>";
+        } elseif ($numero % 2 == 0) {
+            echo "el numero $numero es par <br>";
+        } else {
+            echo "el numero $numero es impar <br>";
+        }
+    }
+    ?>
+
+    <h3>37</h3>
+    <p>
+        Crear un script PHP que genera aleatoriamente un color RGB en hexadecimal. Mostrar el resultado con ese color de fondo y el texto “Este es el color generado aleatoriamente”. ¡Cuidado! El texto debe poder verse en el color de fondo.
+    </p>
+
+    <?php
+    // Generar un color RGB aleatorio en formato hexadecimal
+    $rojo = dechex(rand(0, 255));
+    $verde = dechex(rand(0, 255));
+    $azul = dechex(rand(0, 255));
+
+    // Asegurarse de que los valores hexadecimales tengan dos caracteres
+    $rojo = str_pad($rojo, 2, "0", STR_PAD_LEFT);
+    $verde = str_pad($verde, 2, "0", STR_PAD_LEFT);
+    $azul = str_pad($azul, 2, "0", STR_PAD_LEFT);
+
+    // Combinar los valores para formar el color hexadecimal
+    $color_hex = "#$rojo$verde$azul";
+
+    // Función para calcular la luminosidad y determinar si el texto debe ser claro u oscuro
+    function calcularLuminosidad($r, $g, $b)
+    {
+        return (0.299 * $r + 0.587 * $g + 0.114 * $b);
+    }
+
+    // Calcular la luminosidad del color generado
+    $luminosidad = calcularLuminosidad(hexdec($rojo), hexdec($verde), hexdec($azul));
+
+    // Determinar si el texto debe ser blanco o negro según la luminosidad del color
+    $color_texto = $luminosidad > 128 ? '#000000' : '#FFFFFF';
+
+    ?>
+
+    <h3>38</h3>
+    <p>
+        Crear un script PHP que muestre los cuadrados y cubos de dos números enteros generados aleatoriamente y con una diferencia entre ellos menor de 20.
+    </p>
+    <?php
+    // Generar el primer número aleatorio entre 1 y 100
+    $num1 = rand(1, 100);
+
+    // Generar el segundo número aleatorio, asegurándose de que la diferencia con el primero sea menor a 20
+    do {
+        $num2 = rand(1, 100);
+    } while (abs($num1 - $num2) >= 20);
+
+    // Calcular los cuadrados y cubos de ambos números
+    $cuadrado_num1 = $num1 * $num1;
+    $cubo_num1 = $num1 * $num1 * $num1;
+
+    $cuadrado_num2 = $num2 * $num2;
+    $cubo_num2 = $num2 * $num2 * $num2;
+
+    // Mostrar los resultados
+    echo "Número 1: $num1\n";
+    echo "Cuadrado de $num1: $cuadrado_num1\n";
+    echo "Cubo de $num1: $cubo_num1\n\n";
+
+    echo "Número 2: $num2\n";
+    echo "Cuadrado de $num2: $cuadrado_num2\n";
+    echo "Cubo de $num2: $cubo_num2\n";
+    ?>
+
+    <h3>39</h3>
+    <p>
+        Crear un script PHP que genera hasta un máximo de 100 números aleatorios o hasta la suma de sus cuadrados sea mayor que 10.000 y menor que 11.000. Al final, que muestre también cuántos de ellos son impares.
+    </p>
+
+    <?php
+    // Inicializar variables
+    $suma_cuadrados = 0;
+    $contador_numeros = 0;
+    $numeros_impares = 0;
+    $numeros_generados = [];
+
+    // Generar hasta un máximo de 100 números
+    while ($contador_numeros < 100 && ($suma_cuadrados <= 10000 || $suma_cuadrados >= 11000)) {
+        // Generar un número aleatorio entre 1 y 100
+        $numero = rand(1, 100);
+
+        // Calcular el cuadrado del número y sumarlo a la suma de cuadrados
+        $suma_cuadrados += $numero * $numero;
+
+        // Guardar el número en un array para mostrarlo al final
+        $numeros_generados[] = $numero;
+
+        // Contar si el número es impar
+        if ($numero % 2 != 0) {
+            $numeros_impares++;
+        }
+
+        // Incrementar el contador de números
+        $contador_numeros++;
+
+        // Detener si la suma de cuadrados está dentro del rango deseado
+        if ($suma_cuadrados > 10000 && $suma_cuadrados < 11000) {
+            break;
+        }
+    }
+
+    // Mostrar los resultados
+    echo "Números generados:\n";
+    echo implode(', ', $numeros_generados) . "\n\n";
+
+    echo "Suma de los cuadrados: $suma_cuadrados\n";
+    echo "Cantidad de números generados: $contador_numeros\n";
+    echo "Cantidad de números impares: $numeros_impares\n";
+    ?>
+
+
+    <h3>40</h3>
+    <p>
+        Crear un script PHP que genera números aleatorios entre 1 y 100 números que hasta uno que tenga raíz cuadrada entera. Mostrar todos los números con sus raíces cuadradas.
+    </p>
+    <?php
+    // Inicializar variables
+    $numeros_generados = [];
+    $raiz_entera_encontrada = false;
+
+    // Bucle para generar números aleatorios hasta encontrar uno con raíz cuadrada entera
+    while (!$raiz_entera_encontrada) {
+        // Generar un número aleatorio entre 1 y 100
+        $numero = rand(1, 100);
+
+        // Calcular la raíz cuadrada del número
+        $raiz_cuadrada = sqrt($numero);
+
+        // Guardar el número y su raíz cuadrada en el array
+        $numeros_generados[] = [
+            'numero' => $numero,
+            'raiz_cuadrada' => $raiz_cuadrada
+        ];
+
+        // Verificar si la raíz cuadrada es entera
+        if ($raiz_cuadrada == floor($raiz_cuadrada)) {
+            $raiz_entera_encontrada = true;
+        }
+    }
+
+    // Mostrar todos los números generados y sus raíces cuadradas
+    echo "Números generados:\n";
+    foreach ($numeros_generados as $dato) {
+        echo "Número: " . $dato['numero'] . " - Raíz cuadrada: " . $dato['raiz_cuadrada'] . "\n";
+    }
+
+    echo "\nNúmero con raíz cuadrada entera encontrado: " . $numero . "\n";
+    ?>
+
+
     <br><br><br><br><br>
     <hr>
     <p>Fin del script</p>
