@@ -391,7 +391,7 @@
     $vector1 = generarArray(500, 0, 100);
     $vector2 = array_reverse(generarArray(500, 0, 100));
     $coincidencias = array();
-    
+
     foreach ($vector1 as $key => $value) {
         if ($value == $vector2[$key]) {
             $coincidencias[] = $value;
@@ -400,21 +400,172 @@
 
     echo "<fieldset>
         <legend>Coincidencias</legend>";
-        echo "Coincidencias: " . count($coincidencias) . "<br>";
-        foreach ($coincidencias as $num) {
-            echo $num . " ";
-        }
+    echo "Coincidencias: " . count($coincidencias) . "<br>";
+    foreach ($coincidencias as $num) {
+        echo $num . " ";
+    }
     echo "</fieldset>";
-
 
 
     ?>
 
+    <h2>14</h2>
+    <p>
+        Escribir un script PHP que genera las notas de 4 asignaturas y 3 exámenes por cada asignatura. Visualizar por pantalla la media de las notas de examenes suspensos por asignatura
+    </p>
+
+    <?php
+    ?>
+
+    <h2>14</h2>
+    <p>
+        Escribir un script PHP que genera las notas de 4 asignaturas y 3 exámenes por cada asignatura. Visualizar por pantalla la media de las notas de exámenes suspensos por asignatura.
+    </p>
+
+    <?php
+
+
+    $notas = generarArrayColFil(4, 3, 0, 10);
+    $suspensos = array();
+
+    foreach ($notas as $asignatura => $examenes) {
+        $suspensosAsignatura = array_filter($examenes, function ($nota) {
+            return $nota < 5;
+        });
+
+        if (count($suspensosAsignatura) > 0) {
+            $mediaSuspensos = round(array_sum($suspensosAsignatura) / count($suspensosAsignatura), 2);
+            $suspensos[$asignatura] = $mediaSuspensos;
+        }
+    }
+
+    echo "<fieldset>
+    <legend>Suspensos</legend>";
+    foreach ($suspensos as $asignatura => $media) {
+        echo "Asignatura $asignatura: $media <br>";
+    }
+    echo "</fieldset>";
+
+    
+    ?>
+
+    <h2>15</h2>
+    <p>
+    Escribir un script PHP que rellena una matriz de 10 filas por 20 columnas con valores aleatorios entre 1 y 100. Posteriormente generar un número aleatorio en ese rango y buscarlo en la matriz generada. Tiene que visualizar la posición de la matriz en la que se encuentre dicho número y si no lo encuentra emite un mensaje
+    </p>
+
+    <?php
+
+    $matriz = generarArrayColFil(20, 10, 1, 100);
+
+    $numero = rand(1, 100);
 
 
 
+    foreach ($matriz as $fil => $col) {
+        
+        $colIndex = array_search($numero, $col);
+        if ($colIndex !== false) {
+            $resultado = "numero encontrado en la fila $fil y columna $colIndex";
+            break;
+        }
+    }
+
+    echo $resultado;
+
+    ?>
 
 
+    <h2>16</h2>
+    <p>
+    Escribir un script PHP que rellena un vector con los nombres y las notas de 10 alumnos. Al final visualizará los nombres de los alumnos que tienen la nota más alta y la más baja.
+    </p>
+
+    <?php
+    $notas = array();
+    $notas = array(
+        "Juan" => 5,
+        "Pedro" => 6,
+        "Maria" => 7,
+        "Ana" => 8,
+        "Luis" => 9,
+        "Carlos" => 10,
+        "Sara" => 4,
+        "Laura" => 3,
+        "Sofia" => 2,
+        "Lucia" => 1
+    );
+
+    foreach ($notas as $nombre => $nota) {
+        if ($nota == max($notas)) {
+            echo "Maximo: $nombre $nota<br>";
+        } elseif ($nota == min($notas)) {
+            echo "Minimo: $nombre $nota<br>";
+        }
+    }
+
+
+    ?>
+
+    <h2>17</h2>
+    <p>
+    Escribir un script PHP que rellena una matriz de 10 filas por 10 columnas con números enteros y posteriormente hay que buscar el elemento mayor en la bisectriz superior y el elemento mayor en la bisectriz inferior. Considerar que la diagonal principal se encuentra en la bisectriz superior.
+    </p>
+
+    <?php
+    $matriz = generarArrayColFil(10, 10, 1, 100);
+  
+
+    $maxSuperior = "";
+    $maxInferior = "";
+
+    foreach ($matriz as $i => $fila) {
+        $maxSuperior = max($maxSuperior, $fila[$i]);
+        $maxInferior = max($maxInferior, $fila[9 - $i]);
+    }
+    
+    echo "Maximo superior: $maxSuperior <br>";
+    echo "Maximo inferior: $maxInferior <br>";
+    echo "<fieldset>
+        <legend>Matriz</legend>";
+    foreach ($matriz as $fila) {
+        foreach ($fila as $num) {
+            echo $num . " ";
+        }
+        echo "<br>";
+    }
+    echo "</fieldset>";
+    
+    
+    ?>
+
+    <h2>18</h2>
+    <p>
+    Escribir un script PHP que rellene un array de 10 elementos con números enteros aleatorios. Posteriormente visualizar los números en orden ascendente y luego descendente.
+    </p>
+
+    <?php
+    
+    $vector = generarArray(10, 1, 100);
+    $ordenado = sort($vector);
+    
+    
+    echo "<fieldset>
+    <legend>Visualizar</legend>";
+    foreach ($vector as $num) {
+        echo $num . " ";
+    }
+
+    echo "<br>";
+    $reverse = rsort($vector);
+
+    foreach ($vector as $num) {
+        echo $num . " ";
+    }
+
+
+    echo "</fieldset>";
+    ?>
 
 
 
