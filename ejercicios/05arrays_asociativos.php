@@ -179,7 +179,12 @@ $inventario["plátanos"] -= 5;
     function mostrarAgenda($agenda)
     {
         echo "<table border='1'>";
-        echo "<tr><th>Nombre</th><th>Teléfono</th><th>Email</th></tr>";
+        echo "
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+        </tr>";
         foreach ($agenda as $nombre => $datos) {
             echo "<tr>";
             echo "<td>$nombre</td>";
@@ -189,6 +194,7 @@ $inventario["plátanos"] -= 5;
         }
         echo "</table>";
     }
+
 
     function buscarAgenda($agenda, $nombre)
     {
@@ -226,7 +232,7 @@ $inventario["plátanos"] -= 5;
     mostrarAgenda($agenda);
 
     echo "<br>";
-    buscarAgenda($agenda, "Pedro");
+    buscarAgenda($agenda, "Juan");
 
     mostrarAgenda($agenda);
 
@@ -254,13 +260,13 @@ $inventario["plátanos"] -= 5;
         ],
         "654321" => [
             ["tipo" => "I", "fecha" => "2020-01-02", "concepto" => "Transferencia", "cantidad" => 200]
-            ]
-        ];
-        
-        function mostrarCuentas($banco)
-        {
-            echo "<table border='1'>";
-            echo "<tr>
+        ]
+    ];
+
+    function mostrarCuentas($banco)
+    {
+        echo "<table border='1'>";
+        echo "<tr>
             <th>Cuenta</th>
             <th>Tipo</th>
         <th>Fecha</th>
@@ -299,37 +305,411 @@ $inventario["plátanos"] -= 5;
         <th>Cuenta</th>
         <th>Cantidad</th>
         </tr>";
-        echo "<tr>";
-        echo "<td>$cuenta</td>";
-        echo "<td>" . ($ingresos - $reintegros) . "</td>";
-        echo "</tr>";
-        echo "</table>";
+            echo "<tr>";
+            echo "<td>$cuenta</td>";
+            echo "<td>" . ($ingresos - $reintegros) . "</td>";
+            echo "</tr>";
+            echo "</table>";
+        }
     }
-}
 
-function buscarTransferencias($banco)
-{
-    echo "<h3>Ingresos por Transferencia Bancaria</h3>";
-    foreach ($banco as $cuenta => $datos) {
-        foreach ($datos as $dato) {
-            if ($dato['tipo'] == 'I' && str_contains($dato['concepto'], 'Transferencia')) {
-                echo "Cuenta: $cuenta, Fecha: " . $dato['fecha'] . ", Concepto: " . $dato['concepto'] . ", Cantidad: " . $dato['cantidad'] . "<br>";
+    function buscarTransferencias($banco)
+    {
+        echo "<h3>Ingresos por Transferencia Bancaria</h3>";
+        foreach ($banco as $cuenta => $datos) {
+            foreach ($datos as $dato) {
+                if ($dato['tipo'] == 'I' && str_contains($dato['concepto'], 'Transferencia')) {
+                    echo "Cuenta: $cuenta, Fecha: " . $dato['fecha'] . ", Concepto: " . $dato['concepto'] . ", Cantidad: " . $dato['cantidad'] . "<br>";
+                }
             }
         }
     }
-}
 
-mostrarCuentas($banco);
-echo "<br>";
-saldoCuentas($banco);
-echo "<br>";
-buscarTransferencias($banco);
+    mostrarCuentas($banco);
+    echo "<br>";
+    saldoCuentas($banco);
+    echo "<br>";
+    buscarTransferencias($banco);
 
 
 
     ?>
 
 
+    <h2>23</h2>
+
+    <p>
+        Escribir un script PHP que gestiona un conjunto de artículos.
+        • Cada artículo tiene la siguiente estructura: Referencia (4 caracteres alfabéticos + 4 dígitos numéricos), descripción y PVP.
+        • La referencia actúa como clave.
+        • Mostrar el listado de artículos en formato tabla.
+        • Buscar el artículo más caro y el más barato.
+    </p>
+
+    <?php
+
+    $articulos = [
+        "ABCD1234" => ["descripcion" => "Artículo 1", "pvp" => 10000],
+        "EFGH5678" => ["descripcion" => "Artículo 2", "pvp" => 200],
+        "IJKL9012" => ["descripcion" => "Artículo 3", "pvp" => 150]
+    ];
+
+    function mostrarArticulos($articulos)
+    {
+        echo "<h3>articulos en venta:</h3>";
+
+        echo "<table border='1'>";
+        echo "<tr>
+                <th>referencia</th>
+                <th>descripcion</th>
+                <th>pvp</th>
+            </tr>";
+        foreach ($articulos as $referencia => $datos) {
+            echo "<tr>";
+            echo "<td>$referencia</td>";
+            echo "<td>" . (isset($datos['descripcion']) ? $datos['descripcion'] : '-') . "</td>";
+            echo "<td>" . (isset($datos['pvp']) ? $datos['pvp'] : '-') . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
+
+    function articuloMas($articulos)
+    {
+
+        $barato = "";
+        $caro  = "";
+
+        echo "<h3>Artículo más barato y más caro:</h3>";
+
+        echo "<table border='1'>";
+        echo "<tr>
+                <th>Referencia</th>
+                <th>Descripción</th>
+                <th>PVP</th>
+            </tr>";
+
+        foreach ($articulos as $referencia => $datos) {
+            if ($barato == "" || $datos['pvp'] < $articulos[$barato]['pvp']) {
+                $barato = $referencia;
+            }
+            if ($caro == "" || $datos['pvp'] > $articulos[$caro]['pvp']) {
+                $caro = $referencia;
+            }
+        }
+
+        // Mostrar artículo más barato
+        echo "<tr>";
+        echo "<td>$barato</td>";
+        echo "<td>" . (isset($articulos[$barato]['descripcion']) ? $articulos[$barato]['descripcion'] : '-') . "</td>";
+        echo "<td>" . (isset($articulos[$barato]['pvp']) ? $articulos[$barato]['pvp'] : '-') . "</td>";
+        echo "</tr>";
+
+        // Mostrar artículo más caro
+        echo "<tr>";
+        echo "<td>$caro</td>";
+        echo "<td>" . (isset($articulos[$caro]['descripcion']) ? $articulos[$caro]['descripcion'] : '-') . "</td>";
+        echo "<td>" . (isset($articulos[$caro]['pvp']) ? $articulos[$caro]['pvp'] : '-') . "</td>";
+        echo "</tr>";
+
+        echo "</table>";
+    }
+
+    mostrarArticulos($articulos);
+    articuloMas($articulos)
+
+    ?>
+
+
+    <h2>24</h2>
+    <p>
+        Escribir un script PHP para gestionar un conjunto de vehículos de 2ª mano en un concesionario donde la matrícula es la clave.
+        • La información de cada vehículo es: matrícula (4 dígitos numéricos + 3 letras), marca, modelo, PVP.
+        • Listar los vehículos en formato tabla.
+        • Listar los vehículos de la marca Audi.
+    </p>
+
+    <?php
+    $coches = [
+        "1234ABC" => ["marca" => "Audi", "modelo" => "A4", "pvp" => 20000],
+        "5678DEF" => ["marca" => "BMW", "modelo" => "X5", "pvp" => 30000],
+        "9101GHI" => ["marca" => "Audi", "modelo" => "Q7", "pvp" => 40000],
+        "1121JKL" => ["marca" => "Mercedes", "modelo" => "C-Class", "pvp" => 25000],
+        "3141MNO" => ["marca" => "Audi", "modelo" => "A3", "pvp" => 18000]
+    ];
+
+    function mostrarCoches($coches)
+    {
+        echo "<h3>coches disponibles</h3>";
+
+        echo "<table border='1'>";
+
+        echo "
+        <tr>
+            <td>matricula</td>
+            <td>marca</td>
+            <td>modelo</td>
+            <td>pvp</td>
+        </tr>";
+        foreach ($coches as $coche => $datos) {
+            echo "<tr>";
+            echo "<td>$coche</td>";
+
+            echo "<td>" . (isset($datos['marca']) ? $datos['marca'] : "-") . "</td>";
+            echo "<td>" . (isset($datos['modelo']) ? $datos['modelo'] : "-") . "</td>";
+            echo "<td>" . (isset($datos['pvp']) ? $datos['pvp'] : "-") . "</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+    }
+
+    function mostrarAudis($coches)
+    {
+        echo "<h3>coches disponibles</h3>";
+
+        echo "<table border='1'>";
+
+        echo "
+        <tr>
+            <td>matricula</td>
+            <td>marca</td>
+            <td>modelo</td>
+            <td>pvp</td>
+        </tr>";
+        foreach ($coches as $coche => $datos) {
+            if ($datos['marca'] === 'Audi') {
+                echo "<tr>";
+                echo "<td>$coche</td>";
+
+                echo "<td>" . (isset($datos['marca']) ? $datos['marca'] : "-") . "</td>";
+                echo "<td>" . (isset($datos['modelo']) ? $datos['modelo'] : "-") . "</td>";
+                echo "<td>" . (isset($datos['pvp']) ? $datos['pvp'] : "-") . "</td>";
+                echo "</tr>";
+            }
+        }
+
+        echo "</table>";
+    }
+
+    mostrarCoches($coches);
+    mostrarAudis($coches);
+
+
+    ?>
+
+
+    <h2>25</h2>
+    <p>
+        Escribir un script PHP para gestionar un conjunto de archivos en un soporte de almacenamiento.
+        • Cada archivo tiene la siguiente información: nombre, path, tamanio (en bytes) y atributos
+        • El nombre es la clave.
+        • Listar los archivos en formato tabla con el tamanio en la mayor unidad de medida posible.
+    </p>
+
+    <?php
+    $archivos = [
+        "archivo1.txt" => [
+            "path" => "/ruta/a/archivo1.txt",
+            "tamanio" => 2048, // en bytes
+            "atributos" => "lectura"
+        ],
+        "archivo2.jpg" => [
+            "path" => "/ruta/a/archivo2.jpg",
+            "tamanio" => 1048576, // en bytes
+            "atributos" => "lectura/escritura"
+        ],
+        "archivo3.pdf" => [
+            "path" => "/ruta/a/archivo3.pdf",
+            "tamanio" => 5242880, // en bytes
+            "atributos" => "lectura"
+        ]
+    ];
+
+
+
+    function convertirTamanio($bytes)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        $i = 0;
+        while ($bytes >= 1024 && $i < count($units) - 1) {
+            $bytes /= 1024;
+            $i++;
+        }
+        return round($bytes, 2) . ' ' . $units[$i];
+    }
+
+    function mostrarArchivos($archivos)
+    {
+        echo "<h3>archivos</h3>";
+        echo "<table border='1'>";
+        echo "
+        <tr>
+            <th>nombre</th>
+            <th>ruta</th>
+            <th>tamanio</th>
+            <th>permisos</th>
+        </tr>";
+
+        foreach ($archivos as $archivo => $value) {
+            echo "<tr>";
+            echo "<td>$archivo</td>";
+            echo "<td>" . (isset($value['path']) ? $value['path'] : "-") . "</td>";
+            echo "<td>" . (isset($value['tamanio']) ? convertirTamanio($value['tamanio']) : "-") . "</td>";
+            echo "<td>" . (isset($value['atributos']) ? $value['atributos'] : "-") . "</td>";
+
+
+
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
+
+    mostrarArchivos($archivos);
+
+
+
+    ?>
+
+
+    <h2>26</h2>
+
+    <p>
+        Escribir un script PHP que realice gestiona un conjunto de pacientes en espera para operarse.
+        • La información asociada a cada paciente es: Nº SS (clave), nombre completo, operación, nivel de urgencia: A es el más alto y D el más bajo.
+        • Listar los pacientes en formato de tabla por niveles de urgencia.
+    </p>
+
+    <?php
+    $pacientes = [
+        "123456789" => [
+            "nombre" => "Juan Pérez",
+            "operacion" => "Apendicitis",
+            "urgencia" => "B"
+        ],
+        "987654321" => [
+            "nombre" => "Ana Gómez",
+            "operacion" => "Hernia",
+            "urgencia" => "A"
+        ],
+        "456789123" => [
+            "nombre" => "Luis Martínez",
+            "operacion" => "Cataratas",
+            "urgencia" => "C"
+        ],
+        "321654987" => [
+            "nombre" => "Marta Sánchez",
+            "operacion" => "Colecistectomía",
+            "urgencia" => "D"
+        ]
+    ];
+    // Función para ordenar pacientes por nivel de urgencia
+    function ordenarPorUrgencia($a, $b)
+    {
+        $niveles = ["A" => 1, "B" => 2, "C" => 3, "D" => 4];
+        return $niveles[$a['urgencia']] - $niveles[$b['urgencia']];
+    }
+
+    usort($pacientes, "ordenarPorUrgencia");
+
+    function listarPacientes($pacientes) {
+        echo "<table border='1'>";
+        echo "<tr><th>Nº SS</th><th>Nombre Completo</th><th>Operación</th><th>Urgencia</th></tr>";
+        foreach ($pacientes as $ss => $info) {
+            echo "<tr>
+                    <td>$ss</td>
+                    <td>{$info['nombre']}</td>
+                    <td>{$info['operacion']}</td>
+                    <td>{$info['urgencia']}</td>
+                </tr>";
+        }
+        echo "</table>";
+    }
+    
+    listarPacientes($pacientes);
+
+
+    ?>
+
+<h2>30</h2>
+
+<p>
+Escribir un script PHP para gestionar una lista de mensajes de correo en la bandeja
+de entrada.
+• Cada mensaje contiene la siguiente información: Fecha y hora de entrada,
+remitente (usuario@dominio.tld), asunto, texto del mensaje.
+• Listar los mensajes ordenados por la fecha del mensaje en formato de tabla.
+• Listar la lista de mensajes de un remitente concreto.
+</p>
+
+
+<?php
+$mensajes = [
+    [
+        "fecha" => "2023-10-01 14:30:00",
+        "remitente" => "juan@dominio.tld",
+        "asunto" => "Reunión",
+        "texto" => "Hola, ¿podemos reunirnos mañana?"
+    ],
+    [
+        "fecha" => "2023-10-02 09:15:00",
+        "remitente" => "ana@dominio.tld",
+        "asunto" => "Informe",
+        "texto" => "Adjunto el informe solicitado."
+    ],
+    [
+        "fecha" => "2023-10-01 16:45:00",
+        "remitente" => "luis@dominio.tld",
+        "asunto" => "Consulta",
+        "texto" => "Tengo una consulta sobre el proyecto."
+    ]
+];
+
+// Función para ordenar mensajes por fecha
+function ordenarPorFecha($a, $b) {
+    return strtotime($a['fecha']) - strtotime($b['fecha']);
+}
+
+usort($mensajes, "ordenarPorFecha");
+
+function listarMensajes($mensajes) {
+    echo "<table border='1'>";
+    echo "<tr><th>Fecha</th><th>Remitente</th><th>Asunto</th><th>Texto</th></tr>";
+    foreach ($mensajes as $mensaje) {
+        echo "<tr>
+                <td>{$mensaje['fecha']}</td>
+                <td>{$mensaje['remitente']}</td>
+                <td>{$mensaje['asunto']}</td>
+                <td>{$mensaje['texto']}</td>
+            </tr>";
+    }
+    echo "</table>";
+}
+
+function listarMensajesPorRemitente($mensajes, $remitente) {
+    echo "<h3>Mensajes de $remitente</h3>";
+    echo "<table border='1'>";
+    echo "<tr><th>Fecha</th><th>Remitente</th><th>Asunto</th><th>Texto</th></tr>";
+    foreach ($mensajes as $mensaje) {
+        if ($mensaje['remitente'] == $remitente) {
+            echo "<tr>
+                    <td>{$mensaje['fecha']}</td>
+                    <td>{$mensaje['remitente']}</td>
+                    <td>{$mensaje['asunto']}</td>
+                    <td>{$mensaje['texto']}</td>
+                </tr>";
+        }
+    }
+    echo "</table>";
+}
+
+// Listar todos los mensajes ordenados por fecha
+listarMensajes($mensajes);
+
+// Listar mensajes de un remitente concreto
+$remitente = "juan@dominio.tld";
+listarMensajesPorRemitente($mensajes, $remitente);
+?>
 
 
 
