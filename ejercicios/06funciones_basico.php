@@ -257,17 +257,15 @@
 
     <?php
     
-    function binarioTodecimal($binario) : int {
+    function binarioToDecimal($binario) : int {
         $decimal = bindec($binario);
         return $decimal;
     }
 
-    echo "decimal to binario: " . binarioTodecimal(11100);
+    echo "decimal to binario: " . binarioToDecimal(11100);
     
     
     ?>
-
-
 
 
 
