@@ -191,6 +191,7 @@ $inventario["plátanos"] -= 5;
             // Mostrar teléfono si existe, si no, mostrar un guion
             echo "<td>" . (isset($datos['telefono']) ? $datos['telefono'] : '-') . "</td>";
             echo "<td>" . (isset($datos['email']) ? $datos['email'] : '-') . "</td>";
+            echo "</tr>";
         }
         echo "</table>";
     }
