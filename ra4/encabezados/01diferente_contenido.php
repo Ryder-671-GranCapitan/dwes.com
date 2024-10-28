@@ -22,6 +22,7 @@ echo "<header>Descarga de archivos</header>";
 
 if( $_SERVER['REQUEST_METHOD'] == "GET") {
     $lista_archivos = scandir(DIRECTORIO_ARCHIVOS);
+    
     if( count($lista_archivos) > 0 ) {
         echo <<<TABLA
             <table>
