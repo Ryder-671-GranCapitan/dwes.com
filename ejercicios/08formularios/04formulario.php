@@ -89,8 +89,16 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
     $archivoSubido = false;
 
 
-   //antes de terminar la validación. procesamos el archivo
-    $archivoSubido = guardarArchivo();
+    //antes de terminar la validación. procesamos el archivo
+    if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] === UPLOAD_ERR_OK) {
+        echo "ha recibido archivo";
+        $archivoSubido = guardarArchivo($_FILES['archivo']);
+
+    } else {
+        echo "no ha recibido archivo";
+        // Manejar el error de subida de archivo
+        $archivoSubido = false;
+    }
 
 
     // si todos los campos son validos se devuelven
@@ -112,18 +120,63 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
 
 
 
-function guardarArchivo() {
+// function guardarArchivo() {
+//     // Comprobación final: validamos tipo MIME para mayor seguridad
+//     $tiposAdmitidos = ['image/jpeg', 'image/png']; // Tipos admitidos
+
+//     // Verificamos si el archivo ha sido subido correctamente
+//     if (!isset($_FILES['archivo']) || $_FILES['archivo']['error'] !== UPLOAD_ERR_OK) {
+//         echo "<h2>Error en la subida del archivo</h2>";
+//         return false;
+//     }
+
+//     $archivo = $_FILES['archivo']['tmp_name']; // Nombre del archivo temporal
+//     $mimeArchivo = mime_content_type($archivo); // Tipo MIME del archivo
+
+//     // Comprobamos que el archivo tiene extensión y es del tipo admitido
+//     if ($mimeArchivo && in_array($mimeArchivo, $tiposAdmitidos)) {
+//         // Ruta donde se guardará el archivo
+//         $path = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
+
+//         // Comprobamos la existencia de la carpeta /uploads/
+//         if (!file_exists($path) && !mkdir($path, 0777, true)) {
+//             // Error al crear la carpeta de destino
+//             echo "<h2>Error al crear la carpeta de destino</h2>";
+//             return false;
+//         }
+
+//         // Nombre del archivo para guardarlo (usamos basename para mayor seguridad)
+//         $nombre_archivo = basename($_FILES['archivo']['name']);
+
+//         // Intentamos mover el archivo al destino final
+//         if (move_uploaded_file($archivo, $path . $nombre_archivo)) {
+//             echo "<h2>Archivo subido correctamente</h2>";
+//             return true;
+//         } else {
+//             echo "<h2>Error al mover el archivo al destino final</h2>";
+//             return false;
+//         }
+//     } else {
+//         echo "<h2>Tipo de archivo no permitido</h2>";
+//         return false;
+//     }
+// }
+
+function guardarArchivo($archivo)
+{
     // Comprobación final: validamos tipo MIME para mayor seguridad
     $tiposAdmitidos = ['image/jpeg', 'image/png']; // Tipos admitidos
 
+    var_dump($_FILES);
+
     // Verificamos si el archivo ha sido subido correctamente
-    if (!isset($_FILES['archivo']) || $_FILES['archivo']['error'] !== UPLOAD_ERR_OK) {
+    if (!isset($archivo) || $archivo['error'] !== UPLOAD_ERR_OK) {
         echo "<h2>Error en la subida del archivo</h2>";
         return false;
     }
 
-    $archivo = $_FILES['archivo']['tmp_name']; // Nombre del archivo temporal
-    $mimeArchivo = mime_content_type($archivo); // Tipo MIME del archivo
+    $archivoTmp = $archivo['tmp_name']; // Nombre del archivo temporal
+    $mimeArchivo = mime_content_type($archivoTmp); // Tipo MIME del archivo
 
     // Comprobamos que el archivo tiene extensión y es del tipo admitido
     if ($mimeArchivo && in_array($mimeArchivo, $tiposAdmitidos)) {
@@ -138,10 +191,10 @@ function guardarArchivo() {
         }
 
         // Nombre del archivo para guardarlo (usamos basename para mayor seguridad)
-        $nombre_archivo = basename($_FILES['archivo']['name']);
-        
+        $nombre_archivo = basename($archivo['name']);
+
         // Intentamos mover el archivo al destino final
-        if (move_uploaded_file($archivo, $path . $nombre_archivo)) {
+        if (move_uploaded_file($archivoTmp, $path . $nombre_archivo)) {
             echo "<h2>Archivo subido correctamente</h2>";
             return true;
         } else {
@@ -153,7 +206,6 @@ function guardarArchivo() {
         return false;
     }
 }
-
 
 function mostrarPresupuesto($presupuesto)
 {
@@ -316,7 +368,7 @@ function mostrarFormulario($datos)
                 }
                 ?>
             </div>
-                <input type="file" name="archivo" id="archivo">
+            <input type="file" name="archivo" id="archivo">
 
 
         </fieldset>
