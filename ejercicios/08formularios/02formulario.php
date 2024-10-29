@@ -154,26 +154,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
+        mostrarLibros($librosFiltrados);
         //cuando he recogido todos los libros que busco los muestro en una tabla. recorriendo $librosBuscados en vez de $libros principal
-        echo "<table border='1'>";
-        echo "
-        <tr>
-            <th>ISBN</th>
-            <th>Autor</th>
-            <th>Título</th>
-            <th>Género</th>
-        </tr>";
+        // echo "<table border='1'>";
+        // echo "
+        // <tr>
+        //     <th>ISBN</th>
+        //     <th>Autor</th>
+        //     <th>Título</th>
+        //     <th>Género</th>
+        // </tr>";
 
-        foreach ($librosFiltrados as $isbn => $libro ) {
-            echo "<tr>";
-            echo "<td>$isbn</td>";
-            echo "<td>" . (isset($libro['autor']) ? $libro['autor'] : "-") . "</td>";
-            echo "<td>" . (isset($libro['titulo']) ? $libro['titulo'] : "-") . "</td>";
-            echo "<td>" . (isset($libro['genero']) ? $libro['genero'] : "-") . "</td>";
-            echo "</tr>";
-        }
+        // foreach ($librosFiltrados as $isbn => $libro ) {
+        //     echo "<tr>";
+        //     echo "<td>$isbn</td>";
+        //     echo "<td>" . (isset($libro['autor']) ? $libro['autor'] : "-") . "</td>";
+        //     echo "<td>" . (isset($libro['titulo']) ? $libro['titulo'] : "-") . "</td>";
+        //     echo "<td>" . (isset($libro['genero']) ? $libro['genero'] : "-") . "</td>";
+        //     echo "</tr>";
+        // }
 
-        echo "</table>";
+        // echo "</table>";
     }
 
 

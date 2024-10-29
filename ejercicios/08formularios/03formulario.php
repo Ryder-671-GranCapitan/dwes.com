@@ -146,6 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['enviar'])) {
             <div>
                 <label for="noVeg">No Vegetales:</label>
                 <select name="noVeg[]" id="noVeg" size="5" multiple>
+
+                    <!-- sticky form -->
                     <?php foreach ($noVeg as $nombre => $precio) : ?>
                         <option value="<?= $nombre ?>"><?= "$nombre - $precio €" ?></option>
                     <?php endforeach; ?>
