@@ -86,12 +86,15 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
     }) : [];
     $forma_pago_seleccionada = isset($datos_saneados['forma_pago']) && array_key_exists($datos_saneados['forma_pago'], $forma_pago) ? $datos_saneados['forma_pago'] : $datos_saneados['forma_pago'] = 'co'; // si no recibe una forma de pago valida se le asigna contado
 
+    $archivoSubido = false;
+
+
    //antes de terminar la validación. procesamos el archivo
     $archivoSubido = guardarArchivo();
 
 
     // si todos los campos son validos se devuelven
-    if ($nombre && $telefono && $modelo && $motor && $color && $forma_pago_seleccionada && $archivoSubido) {
+    if ($nombre && $telefono && $modelo && $motor && $color && $forma_pago_seleccionada /*&& $archivoSubido*/) {
         return [
             'nombre' => $nombre,
             'tlf' => $telefono,
@@ -107,83 +110,48 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
     }
 }
 
+
+
 function guardarArchivo() {
-    //globalizo $datos para poder tener sticki forms si falla el proceso del archivo y muestra el formulario con los datos
-    global $datos;
+    // Comprobación final: validamos tipo MIME para mayor seguridad
+    $tiposAdmitidos = ['image/jpeg', 'image/png']; // Tipos admitidos
 
-    
-    //validar archivo (Imágenes, como por ejemplo una foto del dni)
-    // comprobaciones individuales para mostrar mensajes de error personalizados y probar cosas
-    if (!isset($_FILES['archivo']) ){
-        echo "<h2>el archivo no seleccionado</h2>";
-        return false;
-    } 
-    elseif (isset($_FILES['archivo']) && $_FILES['archivo']['error'] != 0) {
-        echo "<h2>error al subir el archivo</h2>";
+    // Verificamos si el archivo ha sido subido correctamente
+    if (!isset($_FILES['archivo']) || $_FILES['archivo']['error'] !== UPLOAD_ERR_OK) {
+        echo "<h2>Error en la subida del archivo</h2>";
         return false;
     }
-    elseif ($_FILES['archivo']['size'] > 500 * 1024) {
-        echo "<h2>el archivo es demasiado grande</h2>";
-        return false;
-    }
-    elseif ($_FILES['archivo']['type'] != 'image/jpeg' && $_FILES['archivo']['type'] != 'image/png') {
-        echo "<h2>el archivo no es una imagen</h2>";
-        return false;
-    }
-    
-    // comprobación final, como la hace rafa:
-    $tiposAdmitidos = ['image/jpeg', 'image/png'];//tipos admitidos
 
-    $archivo = $_FILES['archivo']['tmp_name'];//nombre del archivo temporal
-    $mimeArchivo = mime_content_type($archivo);//tipo de archivo
+    $archivo = $_FILES['archivo']['tmp_name']; // Nombre del archivo temporal
+    $mimeArchivo = mime_content_type($archivo); // Tipo MIME del archivo
 
-    // comprobamos que el archivo tiene extensión y es del tipo admitido
+    // Comprobamos que el archivo tiene extensión y es del tipo admitido
     if ($mimeArchivo && in_array($mimeArchivo, $tiposAdmitidos)) {
-
-        // marcamos la ruta donde se guardará el archivo
+        // Ruta donde se guardará el archivo
         $path = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
 
-        //comprobamos la exitencia de la carpeta /uploads/
-        if (!file_exists($path) && !is_dir($path)) {
-            if (mkdir($path, 0777)) {
-                $nombre_archivo = $_FILES['archivo']['name'];
-                echo "<h2>carpeta creada</h2>";
-
-
-            } else {
-                // no se ha podido crear la carpeta contenedora del archivo. por lo que mostramos el formulario con los datos otra vez, habiendo limpiado el buffer de salida
-                //limpiamos el buffer de salida para que al volver a mostrar el archivo no recoja el archivo que ha dado error antes
-                ob_clean();
-
-                echo "<h2>error al crear la carpeta</h2>";
-                mostrarFormulario($datos);
-                fin_html();
-                ob_flush();
-                exit(6);
-            }
-
-            if (move_uploaded_file($archivo, $path . $nombre_archivo)) {
-                echo "<h2>archivo subido correctamente</h2>";
-                return true;
-            }
-            else {
-                echo "<h2>error al subir el archivo</h2>";
-                return false;
-            }
-    
+        // Comprobamos la existencia de la carpeta /uploads/
+        if (!file_exists($path) && !mkdir($path, 0777, true)) {
+            // Error al crear la carpeta de destino
+            echo "<h2>Error al crear la carpeta de destino</h2>";
+            return false;
         }
 
-        //movemos el archivo a la carpeta uploads
- 
+        // Nombre del archivo para guardarlo (usamos basename para mayor seguridad)
+        $nombre_archivo = basename($_FILES['archivo']['name']);
         
+        // Intentamos mover el archivo al destino final
+        if (move_uploaded_file($archivo, $path . $nombre_archivo)) {
+            echo "<h2>Archivo subido correctamente</h2>";
+            return true;
+        } else {
+            echo "<h2>Error al mover el archivo al destino final</h2>";
+            return false;
+        }
     } else {
-        
-        echo "<h2>el archivo no es correcto</h2>";
-
-
+        echo "<h2>Tipo de archivo no permitido</h2>";
+        return false;
     }
-
-
 }
 
 
@@ -349,8 +317,7 @@ function mostrarFormulario($datos)
                 ?>
             </div>
                 <input type="file" name="archivo" id="archivo">
-            <?php
-            ?>
+
 
         </fieldset>
 
