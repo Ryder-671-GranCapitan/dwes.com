@@ -87,11 +87,11 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
     $forma_pago_seleccionada = isset($datos_saneados['forma_pago']) && array_key_exists($datos_saneados['forma_pago'], $forma_pago) ? $datos_saneados['forma_pago'] : $datos_saneados['forma_pago'] = 'co'; // si no recibe una forma de pago valida se le asigna contado
 
    //antes de terminar la validación. procesamos el archivo
-    guardarArchivo();
+    $archivoSubido = guardarArchivo();
 
 
     // si todos los campos son validos se devuelven
-    if ($nombre && $telefono && $modelo && $motor && $color && $forma_pago_seleccionada) {
+    if ($nombre && $telefono && $modelo && $motor && $color && $forma_pago_seleccionada && $archivoSubido) {
         return [
             'nombre' => $nombre,
             'tlf' => $telefono,
@@ -115,25 +115,30 @@ function guardarArchivo() {
     //validar archivo (Imágenes, como por ejemplo una foto del dni)
     // comprobaciones individuales para mostrar mensajes de error personalizados y probar cosas
     if (!isset($_FILES['archivo']) ){
-        echo "<h2>el archivo no se ha subido</h2>";
+        echo "<h2>el archivo no seleccionado</h2>";
+        return false;
     } 
     elseif (isset($_FILES['archivo']) && $_FILES['archivo']['error'] != 0) {
         echo "<h2>error al subir el archivo</h2>";
+        return false;
     }
     elseif ($_FILES['archivo']['size'] > 500 * 1024) {
         echo "<h2>el archivo es demasiado grande</h2>";
+        return false;
     }
     elseif ($_FILES['archivo']['type'] != 'image/jpeg' && $_FILES['archivo']['type'] != 'image/png') {
         echo "<h2>el archivo no es una imagen</h2>";
+        return false;
     }
     
     // comprobación final, como la hace rafa:
     $tiposAdmitidos = ['image/jpeg', 'image/png'];//tipos admitidos
 
     $archivo = $_FILES['archivo']['tmp_name'];//nombre del archivo temporal
-    $mimeArchivo = mime_content_type($_FILES['archivo']['tmp_name']);//tipo de archivo
+    $mimeArchivo = mime_content_type($archivo);//tipo de archivo
 
-    if ($archivo == $mimeArchivo && in_array($mimeArchivo, $tiposAdmitidos)) {
+    // comprobamos que el archivo tiene extensión y es del tipo admitido
+    if ($mimeArchivo && in_array($mimeArchivo, $tiposAdmitidos)) {
 
         // marcamos la ruta donde se guardará el archivo
         $path = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
@@ -156,13 +161,21 @@ function guardarArchivo() {
                 ob_flush();
                 exit(6);
             }
+
+            if (move_uploaded_file($archivo, $path . $nombre_archivo)) {
+                echo "<h2>archivo subido correctamente</h2>";
+                return true;
+            }
+            else {
+                echo "<h2>error al subir el archivo</h2>";
+                return false;
+            }
+    
         }
 
-        if (move_uploaded_file($_FILES['archivo']['tmp_name'], $path . $nombre_archivo)) {
-            # code...
-        }
-
-        echo "<h2>el archivo es correcto</h2>";
+        //movemos el archivo a la carpeta uploads
+ 
+        
     } else {
         
         echo "<h2>el archivo no es correcto</h2>";
@@ -263,6 +276,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['enviar'])) {
 }
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // no hace falta añadir el action porque se envía a la misma página y ademas esta en sticky forms 
+    $datos = [];
 
     mostrarFormulario($datos);
 }
@@ -340,7 +354,7 @@ function mostrarFormulario($datos)
 
         </fieldset>
 
-        <input type="submit" name="enviar" value="Enviar">
+        <input type="submit" name="enviar" value="enviar">
 
     </form>
 
