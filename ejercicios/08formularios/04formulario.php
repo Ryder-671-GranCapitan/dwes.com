@@ -67,7 +67,8 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
         'motor' => FILTER_SANITIZE_SPECIAL_CHARS,
         'colores' => FILTER_SANITIZE_SPECIAL_CHARS,
         'extras' => [
-            'filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY,
+            'filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            FILTER_REQUIRE_ARRAY,
             'flags' => FILTER_REQUIRE_ARRAY
         ],
         'forma_pago' => FILTER_SANITIZE_SPECIAL_CHARS
@@ -80,10 +81,14 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
     $modelo = isset($datos_saneados['modelo']) && array_key_exists($datos_saneados['modelo'], $modelos) ? $datos_saneados['modelo'] : false;
     $motor = isset($datos_saneados['motor']) && array_key_exists($datos_saneados['motor'], $motores) ? $datos_saneados['motor'] : 'ga'; // si no recibe un motor valido se le asigna gasolina
     $color = isset($datos_saneados['colores']) && array_key_exists($datos_saneados['colores'], $colores) ? $datos_saneados['colores'] : false;
-    $extras_seleccionados = isset($datos_saneados['extras']) && is_array($datos_saneados['extras']) ? array_filter($datos_saneados['extras'], function($extra) use ($extras) {
+    $extras_seleccionados = isset($datos_saneados['extras']) && is_array($datos_saneados['extras']) ? array_filter($datos_saneados['extras'], function ($extra) use ($extras) {
         return array_key_exists($extra, $extras);
     }) : [];
-    $forma_pago_seleccionada = isset($datos_saneados['forma_pago']) && array_key_exists($datos_saneados['forma_pago'], $forma_pago) ? $datos_saneados['forma_pago'] : false;
+    $forma_pago_seleccionada = isset($datos_saneados['forma_pago']) && array_key_exists($datos_saneados['forma_pago'], $forma_pago) ? $datos_saneados['forma_pago'] : $datos_saneados['forma_pago'] = 'co'; // si no recibe una forma de pago valida se le asigna contado
+
+   //antes de terminar la validación. procesamos el archivo
+    guardarArchivo();
+
 
     // si todos los campos son validos se devuelven
     if ($nombre && $telefono && $modelo && $motor && $color && $forma_pago_seleccionada) {
@@ -101,7 +106,76 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
         return false;
     }
 }
-function mostrarPresupuesto($presupuesto) {
+
+function guardarArchivo() {
+    //globalizo $datos para poder tener sticki forms si falla el proceso del archivo y muestra el formulario con los datos
+    global $datos;
+
+    
+    //validar archivo (Imágenes, como por ejemplo una foto del dni)
+    // comprobaciones individuales para mostrar mensajes de error personalizados y probar cosas
+    if (!isset($_FILES['archivo']) ){
+        echo "<h2>el archivo no se ha subido</h2>";
+    } 
+    elseif (isset($_FILES['archivo']) && $_FILES['archivo']['error'] != 0) {
+        echo "<h2>error al subir el archivo</h2>";
+    }
+    elseif ($_FILES['archivo']['size'] > 500 * 1024) {
+        echo "<h2>el archivo es demasiado grande</h2>";
+    }
+    elseif ($_FILES['archivo']['type'] != 'image/jpeg' && $_FILES['archivo']['type'] != 'image/png') {
+        echo "<h2>el archivo no es una imagen</h2>";
+    }
+    
+    // comprobación final, como la hace rafa:
+    $tiposAdmitidos = ['image/jpeg', 'image/png'];//tipos admitidos
+
+    $archivo = $_FILES['archivo']['tmp_name'];//nombre del archivo temporal
+    $mimeArchivo = mime_content_type($_FILES['archivo']['tmp_name']);//tipo de archivo
+
+    if ($archivo == $mimeArchivo && in_array($mimeArchivo, $tiposAdmitidos)) {
+
+        // marcamos la ruta donde se guardará el archivo
+        $path = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
+
+        //comprobamos la exitencia de la carpeta /uploads/
+        if (!file_exists($path) && !is_dir($path)) {
+            if (mkdir($path, 0777)) {
+                $nombre_archivo = $_FILES['archivo']['name'];
+                echo "<h2>carpeta creada</h2>";
+
+
+            } else {
+                // no se ha podido crear la carpeta contenedora del archivo. por lo que mostramos el formulario con los datos otra vez, habiendo limpiado el buffer de salida
+                //limpiamos el buffer de salida para que al volver a mostrar el archivo no recoja el archivo que ha dado error antes
+                ob_clean();
+
+                echo "<h2>error al crear la carpeta</h2>";
+                mostrarFormulario($datos);
+                fin_html();
+                ob_flush();
+                exit(6);
+            }
+        }
+
+        if (move_uploaded_file($_FILES['archivo']['tmp_name'], $path . $nombre_archivo)) {
+            # code...
+        }
+
+        echo "<h2>el archivo es correcto</h2>";
+    } else {
+        
+        echo "<h2>el archivo no es correcto</h2>";
+
+
+    }
+
+
+}
+
+
+function mostrarPresupuesto($presupuesto)
+{
     global $modelos, $motores, $colores, $extras, $forma_pago;
 
 
@@ -118,7 +192,7 @@ function mostrarPresupuesto($presupuesto) {
         <th>Extras</th>
         <th>Forma de pago</th>
     </tr>";
-    
+
     echo "
     <tr>
     
@@ -143,7 +217,7 @@ function mostrarPresupuesto($presupuesto) {
     $precio_motor = $motores[$presupuesto['motor']]['precio'];
     $precio_color = $colores[$presupuesto['colores']]['precio'];
 
-    $precio_extras = array_sum(array_map(function($extra) use ($extras) {
+    $precio_extras = array_sum(array_map(function ($extra) use ($extras) {
         return $extras[$extra]['precio'];
     }, $presupuesto['extras']));
 
@@ -162,14 +236,11 @@ function mostrarPresupuesto($presupuesto) {
     echo "</ul>";
     echo "<li>Precio total: {$precio_total} €</li>";
     echo "</ul>";
-
-    
 }
 
-function pagoFinanciado() {
+function pagoFinanciado()
+{
     global $forma_pago;
-
-    
 }
 
 
@@ -184,86 +255,97 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['enviar'])) {
         //muestro el presupuesto
         mostrarPresupuesto($presupuesto);
 
-        
-    }else{
+        mostrarFormulario($presupuesto);
+    } else {
         echo "<h1>Error en los datos</h1>";
+        mostrarFormulario($presupuesto);
     }
-
-
 }
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // no hace falta añadir el action porque se envía a la misma página y ademas esta en sticky forms 
+
+    mostrarFormulario($datos);
 }
 
+function mostrarFormulario($datos)
+{
+    global $modelos, $motores, $colores, $extras, $forma_pago;
 ?>
 
-<header>Configurador de coches</header>
-<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-    <fieldset>
-        <legend>Configurador de coches</legend>
-        <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" id="nombre" size="40" required>
+    <header>Configurador de coches</header>
+    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
 
-        <label for="tlf">Telefono</label>
-        <input type="tel" name="tlf" id="tlf" size="10" required>
+        <!--  establecer el tamaño max de archivo -->
+        <input type="hidden" name="MAX_FILE_SIZE" value="<?= 500 * 1024 ?>">
 
-        <label for="modelo">Modelo</label>
-        <select name="modelo" id="modelo" size="1">
-            <?php
-            foreach ($modelos as $clave => $modelo) {
-                echo "<option value='$clave'>{$modelo['nombre']} {$modelo['precio']} €</option>";
-            }
-            ?>
-        </select>
+        <fieldset>
+            <legend>Configurador de coches</legend>
+            <label for="nombre">Nombre</label>
 
-        <label for="motores">motores</label>
-        <div>
-            <?php
-            foreach ($motores as $clave => $motor) {
-                echo "<input type='radio' name='motor' value='$clave'>{$motor['nombre']} {$motor['precio']} € <br>";
-            }
-            ?>
-        </div>
+            <input type="text" name="nombre" id="nombre" size="40" required value="<?= isset($datos['nombre']) ? htmlspecialchars($datos['nombre']) : '' ?>">
 
-        <label for="colores">colores</label>
-        <div>
-            <select name="colores" id="colores">
+
+            <label for="tlf">Telefono</label>
+            <input type="tel" name="tlf" id="tlf" size="10" required value="<?= isset($datos['tlf']) ? htmlspecialchars($datos['tlf']) : '' ?>">
+
+            <label for="modelo">Modelo</label>
+            <select name="modelo" id="modelo" size="1">
                 <?php
-                foreach ($colores as $clave => $valor) {
-                    echo "<option value='$clave'>{$valor['nombre']} {$valor['precio']} €</option>";
+                foreach ($modelos as $clave => $modelo) {
+                    echo "<option value='$clave'>{$modelo['nombre']} {$modelo['precio']} €</option>";
                 }
                 ?>
             </select>
-        </div>
 
-        <label for="extras[]">Extras</label>
-        <div>
+            <label for="motores">motores</label>
+            <div>
+                <?php
+                foreach ($motores as $clave => $motor) {
+                    echo "<input type='radio' name='motor' value='$clave'>{$motor['nombre']} {$motor['precio']} € <br>";
+                }
+                ?>
+            </div>
+
+            <label for="colores">colores</label>
+            <div>
+                <select name="colores" id="colores">
+                    <?php
+                    foreach ($colores as $clave => $valor) {
+                        echo "<option value='$clave'>{$valor['nombre']} {$valor['precio']} €</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <label for="extras[]">Extras</label>
+            <div>
+                <?php
+                foreach ($extras as $clave => $extra) {
+                    echo "<input type='checkbox' name='extras[]' value='$clave'>{$extra['nombre']} {$extra['precio']} €<br>";
+                }
+                ?>
+            </div>
+
+            <label for="forma_pago">Forma de pago</label>
+            <div>
+                <?php
+                foreach ($forma_pago as $clave => $valor) {
+                    echo "<input type='radio' name='forma_pago' value='$clave'>{$valor['nombre']} {$valor['meses']} € <br>";
+                }
+                ?>
+            </div>
+                <input type="file" name="archivo" id="archivo">
             <?php
-            foreach ($extras as $clave => $extra) {
-                echo "<input type='checkbox' name='extras[]' value='$clave'>{$extra['nombre']} {$extra['precio']} €<br>";
-            }
             ?>
-        </div>
 
-        <label for="forma_pago">Forma de pago</label>
-<div>
-    <?php
-    foreach ($forma_pago as $clave => $valor) {
-        echo "<input type='radio' name='forma_pago' value='$clave'>{$valor['nombre']} {$valor['meses']} € <br>";
-    }
-    ?>
-</div>
+        </fieldset>
 
+        <input type="submit" name="enviar" value="Enviar">
 
-
-    </fieldset>
-
-
-    <input type="submit" name="enviar" value="Enviar">
-
-</form>
-
+    </form>
 
 <?php
+}
+
 fin_html();
 ?>
