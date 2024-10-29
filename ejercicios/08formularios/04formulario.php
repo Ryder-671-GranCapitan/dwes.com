@@ -86,9 +86,9 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
     }) : [];
     $forma_pago_seleccionada = isset($datos_saneados['forma_pago']) && array_key_exists($datos_saneados['forma_pago'], $forma_pago) ? $datos_saneados['forma_pago'] : $datos_saneados['forma_pago'] = 'co'; // si no recibe una forma de pago valida se le asigna contado
 
-    $archivoSubido = false;
 
 
+    var_dump($_FILES);
     //antes de terminar la validación. procesamos el archivo
     if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] === UPLOAD_ERR_OK) {
         echo "ha recibido archivo";
@@ -284,7 +284,7 @@ inicio_html("Configurador de coches", ["/estilos/formulario.css", "/estilos/gene
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['enviar'])) {
     // se comprueba que los datos del formulario son correctos
     if ($presupuesto = validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)) {
-
+        var_dump($_FILES);
         //muestro el presupuesto
         mostrarPresupuesto($presupuesto);
 
@@ -307,10 +307,10 @@ function mostrarFormulario($datos)
 ?>
 
     <header>Configurador de coches</header>
-    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
 
         <!--  establecer el tamaño max de archivo -->
-        <input type="hidden" name="MAX_FILE_SIZE" value="<?= 500 * 1024 ?>">
+        <input type="hidden" name="MAX_FILE_SIZE" value="<?= 500 * 1024 ?>"> 
 
         <fieldset>
             <legend>Configurador de coches</legend>
@@ -368,7 +368,7 @@ function mostrarFormulario($datos)
                 }
                 ?>
             </div>
-            <input type="file" name="archivo" id="archivo">
+            <input type="file" name="archivo" >
 
 
         </fieldset>
