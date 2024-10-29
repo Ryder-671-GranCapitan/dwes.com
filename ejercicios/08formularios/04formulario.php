@@ -86,9 +86,6 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
     }) : [];
     $forma_pago_seleccionada = isset($datos_saneados['forma_pago']) && array_key_exists($datos_saneados['forma_pago'], $forma_pago) ? $datos_saneados['forma_pago'] : $datos_saneados['forma_pago'] = 'co'; // si no recibe una forma de pago valida se le asigna contado
 
-
-
-    var_dump($_FILES);
     //antes de terminar la validación. procesamos el archivo
     if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] === UPLOAD_ERR_OK) {
         echo "ha recibido archivo";
@@ -167,7 +164,6 @@ function guardarArchivo($archivo)
     // Comprobación final: validamos tipo MIME para mayor seguridad
     $tiposAdmitidos = ['image/jpeg', 'image/png']; // Tipos admitidos
 
-    var_dump($_FILES);
 
     // Verificamos si el archivo ha sido subido correctamente
     if (!isset($archivo) || $archivo['error'] !== UPLOAD_ERR_OK) {
@@ -269,12 +265,42 @@ function mostrarPresupuesto($presupuesto)
     echo "</ul>";
     echo "<li>Precio total: {$precio_total} €</li>";
     echo "</ul>";
+
+    pagoFinanciado($precio_total);
 }
 
-function pagoFinanciado()
+
+function pagoFinanciado($precio_total, $num_mensualidades = 12, $porcentaje_entrada = 0.2)
 {
-    global $forma_pago;
+    // Calcular la cuota de entrada
+    $cuota_entrada = $precio_total * $porcentaje_entrada;
+    
+    // Calcular el monto de cada mensualidad
+    $monto_mensualidad = ($precio_total - $cuota_entrada) / $num_mensualidades;
+    
+    // Calcular la cuota final (puede ser igual a la última mensualidad)
+    $cuota_final = $monto_mensualidad;
+    
+    // Mostrar el plan de pago
+    echo "<h2>Plan de Pago Financiado</h2>";
+    echo "<ul>";
+    echo "<li>Cuota de entrada: " . number_format($cuota_entrada, 2) . " €</li>";
+    echo "<li>Mensualidades:</li>";
+    echo "<ul>";
+    
+    // Generar y mostrar las fechas de pago para cada mensualidad
+    $fecha_actual = new DateTime();
+    for ($i = 1; $i <= $num_mensualidades; $i++) {
+        $fecha_pago = clone $fecha_actual;
+        $fecha_pago->modify("+$i month");
+        echo "<li>Mensualidad $i: " . number_format($monto_mensualidad, 2) . " € - Fecha de pago: " . $fecha_pago->format('d-m-Y') . "</li>";
+    }
+    
+    echo "</ul>";
+    echo "<li>Cuota final: " . number_format($cuota_final, 2) . " €</li>";
+    echo "</ul>";
 }
+
 
 
 
@@ -284,7 +310,6 @@ inicio_html("Configurador de coches", ["/estilos/formulario.css", "/estilos/gene
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['enviar'])) {
     // se comprueba que los datos del formulario son correctos
     if ($presupuesto = validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)) {
-        var_dump($_FILES);
         //muestro el presupuesto
         mostrarPresupuesto($presupuesto);
 
