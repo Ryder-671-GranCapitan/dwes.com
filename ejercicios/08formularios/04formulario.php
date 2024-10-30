@@ -90,7 +90,6 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
     if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] === UPLOAD_ERR_OK) {
         echo "ha recibido archivo";
         $archivoSubido = guardarArchivo($_FILES['archivo']);
-
     } else {
         echo "no ha recibido archivo";
         // Manejar el error de subida de archivo
@@ -116,7 +115,7 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
 }
 
 
-
+//version de guardar archivo sin pasar archivo como parámetro
 // function guardarArchivo() {
 //     // Comprobación final: validamos tipo MIME para mayor seguridad
 //     $tiposAdmitidos = ['image/jpeg', 'image/png']; // Tipos admitidos
@@ -159,11 +158,11 @@ function validarPresupuesto($modelos, $motores, $colores, $extras, $forma_pago)
 //     }
 // }
 
+// recibe como parámetro el archivo y lo guarda en la carpeta uploads
 function guardarArchivo($archivo)
 {
     // Comprobación final: validamos tipo MIME para mayor seguridad
     $tiposAdmitidos = ['image/jpeg', 'image/png']; // Tipos admitidos
-
 
     // Verificamos si el archivo ha sido subido correctamente
     if (!isset($archivo) || $archivo['error'] !== UPLOAD_ERR_OK) {
@@ -180,7 +179,7 @@ function guardarArchivo($archivo)
         $path = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
 
         // Comprobamos la existencia de la carpeta /uploads/
-        if (!file_exists($path) && !mkdir($path, 0777, true)) {
+        if (!is_dir($path) && !mkdir($path, 0777, true)) {
             // Error al crear la carpeta de destino
             echo "<h2>Error al crear la carpeta de destino</h2>";
             return false;
@@ -224,7 +223,7 @@ function mostrarPresupuesto($presupuesto)
 
     echo "
     <tr>
-    
+
         <td>{$presupuesto['nombre']}</td>
         <td>{$presupuesto['tlf']}</td>
         <td>{$modelos[$presupuesto['modelo']]['nombre']}</td>
@@ -274,20 +273,20 @@ function pagoFinanciado($precio_total, $num_mensualidades = 12, $porcentaje_entr
 {
     // Calcular la cuota de entrada
     $cuota_entrada = $precio_total * $porcentaje_entrada;
-    
+
     // Calcular el monto de cada mensualidad
     $monto_mensualidad = ($precio_total - $cuota_entrada) / $num_mensualidades;
-    
+
     // Calcular la cuota final (puede ser igual a la última mensualidad)
     $cuota_final = $monto_mensualidad;
-    
+
     // Mostrar el plan de pago
     echo "<h2>Plan de Pago Financiado</h2>";
     echo "<ul>";
     echo "<li>Cuota de entrada: " . number_format($cuota_entrada, 2) . " €</li>";
     echo "<li>Mensualidades:</li>";
     echo "<ul>";
-    
+
     // Generar y mostrar las fechas de pago para cada mensualidad
     $fecha_actual = new DateTime();
     for ($i = 1; $i <= $num_mensualidades; $i++) {
@@ -295,13 +294,11 @@ function pagoFinanciado($precio_total, $num_mensualidades = 12, $porcentaje_entr
         $fecha_pago->modify("+$i month");
         echo "<li>Mensualidad $i: " . number_format($monto_mensualidad, 2) . " € - Fecha de pago: " . $fecha_pago->format('d-m-Y') . "</li>";
     }
-    
+
     echo "</ul>";
     echo "<li>Cuota final: " . number_format($cuota_final, 2) . " €</li>";
     echo "</ul>";
 }
-
-
 
 
 inicio_html("Configurador de coches", ["/estilos/formulario.css", "/estilos/general.css", "/estilos/tabla.css"]);
@@ -335,7 +332,7 @@ function mostrarFormulario($datos)
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
 
         <!--  establecer el tamaño max de archivo -->
-        <input type="hidden" name="MAX_FILE_SIZE" value="<?= 500 * 1024 ?>"> 
+        <input type="hidden" name="MAX_FILE_SIZE" value="<?= 500 * 1024 ?>">
 
         <fieldset>
             <legend>Configurador de coches</legend>
@@ -393,7 +390,7 @@ function mostrarFormulario($datos)
                 }
                 ?>
             </div>
-            <input type="file" name="archivo" >
+            <input type="file" name="archivo">
 
 
         </fieldset>
