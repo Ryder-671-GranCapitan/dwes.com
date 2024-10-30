@@ -359,6 +359,7 @@ $inventario["plátanos"] -= 5;
     {
         echo "<h3>articulos en venta:</h3>";
 
+        
         echo "<table border='1'>";
         echo "<tr>
                 <th>referencia</th>
