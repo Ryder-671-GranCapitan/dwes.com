@@ -375,20 +375,16 @@ function mostrarFormulario($datos)
 
             <label for="extras[]">Extras</label>
             <div>
-                <?php
-                foreach ($extras as $clave => $extra) {
-                    echo "<input type='checkbox' name='extras[]' value='$clave'>{$extra['nombre']} {$extra['precio']} €<br>";
-                }
-                ?>
+                <?php foreach ($extras as $clave => $extra) : ?>
+                    <input type="checkbox" name="extras[]" value="<?= $clave ?>" <?= isset($datos['extras']) && in_array($clave, $datos['extras']) ? 'checked' : '' ?>> <?= htmlspecialchars($extra['nombre']) ?> <?= htmlspecialchars($extra['precio']) ?> €<br>
+                <?php endforeach; ?>
             </div>
 
             <label for="forma_pago">Forma de pago</label>
             <div>
-                <?php
-                foreach ($forma_pago as $clave => $valor) {
-                    echo "<input type='radio' name='forma_pago' value='$clave'>{$valor['nombre']} {$valor['meses']} € <br>";
-                }
-                ?>
+                <?php foreach ($forma_pago as $clave => $valor) : ?>
+                    <input type="radio" name="forma_pago" value="<?= $clave ?>"> <?= $valor['nombre'] ?> <?= $valor['meses'] ?> € <br>
+                <?php endforeach; ?>
             </div>
             <input type="file" name="archivo">
 
